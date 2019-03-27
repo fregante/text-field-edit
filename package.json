@@ -1,0 +1,35 @@
+{
+	"name": "insert-text-textarea",
+	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
+	"version": "0.0.0",
+	"repository": "bfred-it/insert-text-textarea",
+	"license": "MIT",
+	"files": [
+		"index.js",
+		"index.d.ts"
+	],
+	"keywords": [],
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^0.3.0",
+		"@types/dom-inputevent": "^1.0.4",
+		"@typescript-eslint/eslint-plugin": "^1.5.0",
+		"eslint-config-xo-typescript": "^0.9.0",
+		"typescript": "^3.3.4000",
+		"xo": "*"
+	},
+	"scripts": {
+		"test": "tsc && xo",
+		"prepare": "tsc",
+		"build": "tsc",
+		"watch": "tsc --watch"
+	},
+	"xo": {
+		"extends": "xo-typescript",
+		"extensions": [
+			"ts"
+		],
+		"envs": [
+			"browser"
+		]
+	}
+}
