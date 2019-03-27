@@ -4,6 +4,8 @@
   [badge-travis]: https://api.travis-ci.com/bfred-it/insert-text-textarea.svg
   [link-travis]: https://travis-ci.org/bfred-it/insert-text-textarea
 
+<img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
+
 > Insert text in a textarea (supports Firefox and Undo, where possible)
 
 The text will be inserted after the cursor and it will replace any text that's selected, acting like a `paste` would.
