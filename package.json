@@ -1,7 +1,7 @@
 {
 	"name": "insert-text-textarea",
 	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"repository": "bfred-it/insert-text-textarea",
 	"license": "MIT",
 	"files": [
