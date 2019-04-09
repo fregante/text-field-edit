@@ -9,7 +9,6 @@ declare global {
 	}
 }
 
-
 // Replace selection with text, with Firefox support
 function insertText(textarea: HTMLTextAreaElement, text: string): void {
 	const document = textarea.ownerDocument!;
