@@ -2,6 +2,7 @@ declare global {
 	interface InputEventInit {
 	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
 		inputType: string;
+		isComposing?: boolean;
 	}
 
 	interface Window {
