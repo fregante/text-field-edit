@@ -1,12 +1,12 @@
-interface EnhancedInputEventInit extends InputEventInit {
+interface InputEventInit {
 	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
 	inputType: string;
 }
 
 // Replace selection with text, with Firefox support
 function insertText(textarea: HTMLTextAreaElement, text: string): void {
-	const document = textarea.ownerDocument;
-	const window = document.defaultView;
+	const document = textarea.ownerDocument!;
+	const window = document.defaultView as {InputEvent: typeof InputEvent};
 
 	textarea.focus(); // The passed `textarea` may not be focused
 
@@ -25,7 +25,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 	textarea.dispatchEvent(new window.InputEvent('input', {
 		data: text,
 		inputType: 'insertText'
-	} as EnhancedInputEventInit));
+	}));
 }
 
 module.exports = insertText;
