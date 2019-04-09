@@ -5,6 +5,9 @@ interface EnhancedInputEventInit extends InputEventInit {
 
 // Replace selection with text, with Firefox support
 function insertText(textarea: HTMLTextAreaElement, text: string): void {
+	const document = textarea.ownerDocument;
+	const window = document.defaultView;
+
 	textarea.focus(); // The passed `textarea` may not be focused
 
 	if (document.execCommand('insertText', false, text)) {
@@ -19,7 +22,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		'end' // Without this, the cursor is either at the beginning or `text` remains selected
 	);
 
-	textarea.dispatchEvent(new InputEvent('input', {
+	textarea.dispatchEvent(new window.InputEvent('input', {
 		data: text,
 		inputType: 'insertText'
 	} as EnhancedInputEventInit));
