@@ -2,7 +2,6 @@ declare global {
 	interface InputEventInit {
 	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
 		inputType: string;
-		isComposing?: boolean;
 	}
 
 	interface Window {
@@ -32,7 +31,8 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 
 	textarea.dispatchEvent(new window.InputEvent('input', {
 		data: text,
-		inputType: 'insertText'
+		inputType: 'insertText',
+		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 }
 
