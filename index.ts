@@ -1,12 +1,19 @@
-interface InputEventInit {
+declare global {
+	interface InputEventInit {
 	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
-	inputType: string;
+		inputType: string;
+	}
+
+	interface Window {
+		InputEvent: typeof InputEvent;
+	}
 }
+
 
 // Replace selection with text, with Firefox support
 function insertText(textarea: HTMLTextAreaElement, text: string): void {
 	const document = textarea.ownerDocument!;
-	const window = document.defaultView as {InputEvent: typeof InputEvent};
+	const window = document.defaultView!;
 
 	textarea.focus(); // The passed `textarea` may not be focused
 
