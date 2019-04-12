@@ -8,6 +8,7 @@ const getField = (value = '') => {
 	return field;
 };
 
+// TODO: test input fields and the fallback
 test('insert text in empty field', t => {
 	t.plan(4);
 	const textarea = getField();
@@ -52,3 +53,14 @@ test('replace selected text', t => {
 	t.equal(textarea.selectionEnd, 1);
 });
 
+test('replace inverted selected text', t => {
+	t.plan(4);
+	const textarea = getField('WO');
+	t.equal(textarea.value, 'WO');
+	textarea.selectionStart = 1;
+	textarea.selectionEnd = 0;
+	insertText(textarea, 'A');
+	t.equal(textarea.value, 'AO');
+	t.equal(textarea.selectionStart, 1);
+	t.equal(textarea.selectionEnd, 1);
+});
