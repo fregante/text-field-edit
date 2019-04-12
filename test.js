@@ -13,7 +13,7 @@ const getField = (value = '', start, end) => {
 	return field;
 };
 
-// TODO: test input fields and the fallback
+// TODO: test input[type=text] fields
 test('insert text in empty field', t => {
 	t.plan(4);
 	const textarea = getField();
