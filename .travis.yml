@@ -4,11 +4,4 @@ node_js:
 env:
   - MOZ_HEADLESS=1
 addons:
-  firefox: "49.0"
-  apt:
-    packages:
-      - xvfb
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-  - npm install
+  firefox: latest
