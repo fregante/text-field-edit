@@ -35,5 +35,4 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 	}));
 }
 
-module.exports = insertText;
-export default insertText;
+export = insertText;
