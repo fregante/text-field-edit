@@ -4,7 +4,7 @@ node_js:
 env:
   - MOZ_HEADLESS=1
 addons:
-  firefox: latest
+  firefox: "49.0"
   apt:
     packages:
       - xvfb
