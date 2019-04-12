@@ -1,10 +1,15 @@
 const test = require('tape');
 const insertText = require('.');
 
-const getField = (value = '') => {
+const getField = (value = '', start, end) => {
 	const field = document.createElement('textarea');
 	field.value = value;
 	document.body.append(field);
+	if (end !== undefined) {
+		field.selectionStart = start;
+		field.selectionEnd = end;
+	}
+
 	return field;
 };
 
@@ -31,10 +36,8 @@ test('append text to unselected field', t => {
 
 test('insert text in the middle', t => {
 	t.plan(4);
-	const textarea = getField('WO');
+	const textarea = getField('WO', 1, 1);
 	t.equal(textarea.value, 'WO');
-	textarea.selectionStart = 1;
-	textarea.selectionEnd = 1;
 	insertText(textarea, 'A');
 	t.equal(textarea.value, 'WAO');
 	t.equal(textarea.selectionStart, 2);
@@ -43,12 +46,20 @@ test('insert text in the middle', t => {
 
 test('replace selected text', t => {
 	t.plan(4);
-	const textarea = getField('WO');
+	const textarea = getField('WO', 0, 1);
 	t.equal(textarea.value, 'WO');
-	textarea.selectionStart = 0;
-	textarea.selectionEnd = 1;
 	insertText(textarea, 'A');
 	t.equal(textarea.value, 'AO');
 	t.equal(textarea.selectionStart, 1);
 	t.equal(textarea.selectionEnd, 1);
+});
+
+test('fire input event', t => {
+	const textarea = getField();
+	textarea.addEventListener('input', event => {
+		t.equal(event.type, 'input');
+		t.equal(event.inputType, 'insertText');
+		t.end();
+	});
+	insertText(textarea, 'A');
 });
