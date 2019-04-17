@@ -36,7 +36,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 
-	if (initialFocus !== textarea && initialFocus.focus) {
+	if (initialFocus && initialFocus.focus && initialFocus !== textarea) {
 		initialFocus.focus();
 	}
 }
