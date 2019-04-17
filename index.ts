@@ -1,8 +1,9 @@
-interface EnhancedInputEventInit extends InputEventInit {
-	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
-	inputType: string;
-}
 declare global {
+	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
+	interface InputEventInit {
+		inputType: string;
+	}
+
 	interface Window {
 		InputEvent: typeof InputEvent;
 	}
@@ -29,9 +30,9 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 
 	textarea.dispatchEvent(new window.InputEvent('input', {
 		data: text,
-		inputType: 'insertText'
-	} as EnhancedInputEventInit));
+		inputType: 'insertText',
+		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
+	}));
 }
 
-module.exports = insertText;
-export default insertText;
+export = insertText;
