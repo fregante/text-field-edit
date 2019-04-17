@@ -2,7 +2,7 @@
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/insert-text-textarea.svg?label=gzipped
   [badge-travis]: https://api.travis-ci.com/bfred-it/insert-text-textarea.svg
-  [link-travis]: https://travis-ci.org/bfred-it/insert-text-textarea
+  [link-travis]: https://travis-ci.com/bfred-it/insert-text-textarea
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
