@@ -20,7 +20,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 
 	if (document.execCommand('insertText', false, text)) {
 		return;
-        }
+	}
 
 	// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
 	textarea.setRangeText(
@@ -36,7 +36,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 
-	if (initialFocus !== textarea) {
+	if (initialFocus !== textarea && initialFocus.focus) {
 		initialFocus.focus();
 	}
 }
