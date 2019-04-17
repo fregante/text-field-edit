@@ -13,16 +13,16 @@ declare global {
 function insertText(textarea: HTMLTextAreaElement, text: string): void {
 	const document = textarea.ownerDocument!;
 	const {InputEvent} = document.defaultView!;
-	const currentFocus = document.activeElement;
-	if (currentFocus !== textarea) {
+	const initialFocus = document.activeElement;
+	if (initialFocus !== textarea) {
 		textarea.focus();
 	}
 
 	if (document.execCommand('insertText', false, text)) {
-    return;
-  }
+		return;
+        }
 
-  // Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
+	// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
 	textarea.setRangeText(
 		text,
 		textarea.selectionStart,
@@ -36,7 +36,9 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 
-	document.activeElement = currentFocus;
+	if (initialFocus !== textarea) {
+		initialFocus.focus();
+	}
 }
 
 export = insertText;
