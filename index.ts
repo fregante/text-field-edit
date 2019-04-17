@@ -1,6 +1,6 @@
 declare global {
+	// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
 	interface InputEventInit {
-		// Wait for https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33903
 		inputType: string;
 	}
 
@@ -18,8 +18,11 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		textarea.focus();
 	}
 
-	if (!document.execCommand('insertText', false, text)) {
-		// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
+	if (document.execCommand('insertText', false, text)) {
+    return;
+  }
+
+  // Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
 	textarea.setRangeText(
 		text,
 		textarea.selectionStart,
@@ -32,8 +35,7 @@ function insertText(textarea: HTMLTextAreaElement, text: string): void {
 		inputType: 'insertText',
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
-	}
-	
+
 	document.activeElement = currentFocus;
 }
 

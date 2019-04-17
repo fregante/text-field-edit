@@ -1,14 +1,27 @@
 {
 	"name": "insert-text-textarea",
 	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"repository": "bfred-it/insert-text-textarea",
 	"license": "MIT",
 	"files": [
 		"index.js",
 		"index.d.ts"
 	],
-	"keywords": [],
+	"keywords": [
+		"text area",
+		"editor",
+		"manipulation",
+		"inject",
+		"inserttext",
+		"at cursor",
+		"form",
+		"field",
+		"cross-browser",
+		"document",
+		"execCommand",
+		"dom"
+	],
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.3.0",
 		"@types/dom-inputevent": "^1.0.4",
@@ -25,7 +38,7 @@
 		"test": "npm-run-all --silent prepare --parallel test:*",
 		"test:lint": "xo",
 		"test:blink": "browserify test.js | tape-run",
-		"test:gecko": "browserify test.js | tape-run --browser firefox",
+		"test:gecko": "if [ $CI ]; then browserify test.js | tape-run --browser firefox; fi",
 		"prepare": "tsc",
 		"build": "tsc",
 		"watch": "tsc --watch"
