@@ -50,6 +50,7 @@ const textarea = document.querySelector('textarea');
 const button = document.querySelector('.js-markdown-make-text-bold');
 button.addEventListener(event => {
 	// This will replace the selected text (if any) with **selected text**
+        // Don't use `getSelection()` if you want Firefox support
 	const selectedText = value.slice(
 		textarea.selectionStart,
 		textarea.selectionEnd
