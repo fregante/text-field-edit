@@ -10,7 +10,7 @@ declare global {
 }
 
 // Replace selection with text, with Firefox support
-function insertText(textarea: HTMLTextAreaElement, text: string): void {
+function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	const document = textarea.ownerDocument!;
 	const {InputEvent} = document.defaultView!;
 	const initialFocus = document.activeElement;
