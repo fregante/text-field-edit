@@ -1,7 +1,7 @@
 # insert-text-textarea [![(size)][badge-gzip]](#no-link) [![(status)][badge-travis]][link-travis]
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/insert-text-textarea.svg?label=gzipped
-  [badge-travis]: https://api.travis-ci.com/bfred-it/insert-text-textarea.svg
+  [badge-travis]: https://api.travis-ci.com/bfred-it/insert-text-textarea.svg?branch=master
   [link-travis]: https://travis-ci.com/bfred-it/insert-text-textarea
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
