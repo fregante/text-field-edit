@@ -1,27 +1,50 @@
 {
 	"name": "insert-text-textarea",
-	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
 	"version": "1.0.3",
-	"repository": "bfred-it/insert-text-textarea",
+	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
+	"keywords": [
+		"at cursor",
+		"cross-browser",
+		"document",
+		"dom",
+		"editor",
+		"execCommand",
+		"field",
+		"form",
+		"inject",
+		"inserttext",
+		"manipulation",
+		"text area"
+	],
+	"repository": "fregante/insert-text-textarea",
 	"license": "MIT",
 	"files": [
 		"index.js",
 		"index.d.ts"
 	],
-	"keywords": [
-		"text area",
-		"editor",
-		"manipulation",
-		"inject",
-		"inserttext",
-		"at cursor",
-		"form",
-		"field",
-		"cross-browser",
-		"document",
-		"execCommand",
-		"dom"
-	],
+	"scripts": {
+		"build": "tsc",
+		"prepare": "tsc",
+		"test": "npm-run-all --silent prepare --parallel test:*",
+		"test:blink": "browserify test.js | tape-run",
+		"test:gecko": "if [ $CI ]; then browserify test.js | tape-run --browser firefox; fi",
+		"test:lint": "xo",
+		"watch": "tsc --watch"
+	},
+	"xo": {
+		"envs": [
+			"browser"
+		],
+		"extensions": [
+			"ts"
+		],
+		"overrides": [
+			{
+				"files": "**/*.ts",
+				"extends": "xo-typescript"
+			}
+		]
+	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.3.0",
 		"@types/dom-inputevent": "^1.0.4",
@@ -33,28 +56,5 @@
 		"tape-run": "^5.0.0",
 		"typescript": "^3.3.3333",
 		"xo": "*"
-	},
-	"scripts": {
-		"test": "npm-run-all --silent prepare --parallel test:*",
-		"test:lint": "xo",
-		"test:blink": "browserify test.js | tape-run",
-		"test:gecko": "if [ $CI ]; then browserify test.js | tape-run --browser firefox; fi",
-		"prepare": "tsc",
-		"build": "tsc",
-		"watch": "tsc --watch"
-	},
-	"xo": {
-		"extensions": [
-			"ts"
-		],
-		"envs": [
-			"browser"
-		],
-		"overrides": [
-			{
-				"files": "**/*.ts",
-				"extends": "xo-typescript"
-			}
-		]
 	}
 }

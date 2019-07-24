@@ -1,8 +1,8 @@
 # insert-text-textarea [![(size)][badge-gzip]](#no-link) [![(status)][badge-travis]][link-travis]
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/insert-text-textarea.svg?label=gzipped
-  [badge-travis]: https://api.travis-ci.com/bfred-it/insert-text-textarea.svg?branch=master
-  [link-travis]: https://travis-ci.com/bfred-it/insert-text-textarea
+  [badge-travis]: https://api.travis-ci.com/fregante/insert-text-textarea.svg?branch=master
+  [link-travis]: https://travis-ci.com/fregante/insert-text-textarea
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
@@ -10,7 +10,7 @@
 
 The text will be inserted after the cursor and it will replace any text that's selected, acting like a `paste` would.
 
-This is useful when creating "editor" buttons, to add text or wrap the selected text. For example, this module is used by [indent-textarea](https://github.com/bfred-it/indent-textarea).
+This is useful when creating "editor" buttons, to add text or wrap the selected text. For example, this module is used by [indent-textarea](https://github.com/fregante/indent-textarea).
 
 An `input` event will also be dispatched, with `event.inputType === 'insertText'`.
 
@@ -61,6 +61,6 @@ button.addEventListener(event => {
 
 # Related
 
-- [indent-textarea](https://github.com/bfred-it/indent-textarea) - Add editor-like tab-to-indent functionality to <textarea>, in a few bytes. Uses this module.
-- [fit-textarea](https://github.com/bfred-it/fit-textarea) - Automatically expand a `<textarea>` to fit its content, in a few bytes.
+- [indent-textarea](https://github.com/fregante/indent-textarea) - Add editor-like tab-to-indent functionality to <textarea>, in a few bytes. Uses this module.
+- [fit-textarea](https://github.com/fregante/fit-textarea) - Automatically expand a `<textarea>` to fit its content, in a few bytes.
 - [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.
