@@ -1,8 +1,8 @@
 const test = require('tape');
 const insertText = require('.');
 
-const getField = (value = '', start, end) => {
-	const field = document.createElement('textarea');
+const getField = (value = '', start = undefined, end = undefined, type = 'textarea') => {
+	const field = document.createElement(type);
 	field.value = value;
 	document.body.append(field);
 	if (end !== undefined) {
@@ -13,15 +13,24 @@ const getField = (value = '', start, end) => {
 	return field;
 };
 
-// TODO: test input[type=text] fields
-test('insert text in empty field', t => {
-	t.plan(4);
+test('insert text in empty textarea', t => {
 	const textarea = getField();
 	t.equal(textarea.value, '');
 	insertText(textarea, 'a');
 	t.equal(textarea.value, 'a');
 	t.equal(textarea.selectionStart, 1);
 	t.equal(textarea.selectionEnd, 1);
+	t.end();
+});
+
+test('insert text in empty input[type=text]', t => {
+	const textarea = getField('', undefined, undefined, 'input');
+	t.equal(textarea.value, '');
+	insertText(textarea, 'a');
+	t.equal(textarea.value, 'a');
+	t.equal(textarea.selectionStart, 1);
+	t.equal(textarea.selectionEnd, 1);
+	t.end();
 });
 
 test('append text to unselected field', t => {

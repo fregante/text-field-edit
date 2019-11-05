@@ -1,7 +1,7 @@
 {
 	"name": "insert-text-textarea",
 	"version": "1.0.3",
-	"description": "Insert text in a textarea (supports Firefox and Undo, where possible)",
+	"description": "Insert text in a textarea and input[text] (supports Firefox and Undo, where possible)",
 	"keywords": [
 		"at cursor",
 		"cross-browser",
@@ -47,9 +47,8 @@
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.3.0",
-		"@types/dom-inputevent": "^1.0.4",
 		"@typescript-eslint/eslint-plugin": "^1.4.2",
-		"@typescript-eslint/parser": "^1.13.0",
+		"@typescript-eslint/parser": "^2.6.1",
 		"browserify": "^16.2.2",
 		"eslint-config-xo-typescript": "^0.9.0",
 		"npm-run-all": "^4.1.3",
