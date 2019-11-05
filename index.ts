@@ -1,5 +1,5 @@
-// Replace selection with text, with Firefox support
-function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+/** Replace selection with text, with Firefox support */
+export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	const document = textarea.ownerDocument!;
 	textarea.focus(); // The passed `textarea` may not be focused
 
@@ -21,5 +21,3 @@ function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: stri
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 }
-
-export = insertText;

@@ -1,5 +1,5 @@
-const test = require('tape');
-const insertText = require('.');
+import test from 'tape';
+import insertText from '.';
 
 const getField = (value = '', start = undefined, end = undefined, type = 'textarea') => {
 	const field = document.createElement(type);
@@ -34,33 +34,33 @@ test('insert text in empty input[type=text]', t => {
 });
 
 test('append text to unselected field', t => {
-	t.plan(4);
 	const textarea = getField('W');
 	t.equal(textarea.value, 'W');
 	insertText(textarea, 'O');
 	t.equal(textarea.value, 'WO');
 	t.equal(textarea.selectionStart, 2);
 	t.equal(textarea.selectionEnd, 2);
+	t.end();
 });
 
 test('insert text in the middle', t => {
-	t.plan(4);
 	const textarea = getField('WO', 1, 1);
 	t.equal(textarea.value, 'WO');
 	insertText(textarea, 'A');
 	t.equal(textarea.value, 'WAO');
 	t.equal(textarea.selectionStart, 2);
 	t.equal(textarea.selectionEnd, 2);
+	t.end();
 });
 
 test('replace selected text', t => {
-	t.plan(4);
 	const textarea = getField('WO', 0, 1);
 	t.equal(textarea.value, 'WO');
 	insertText(textarea, 'A');
 	t.equal(textarea.value, 'AO');
 	t.equal(textarea.selectionStart, 1);
 	t.equal(textarea.selectionEnd, 1);
+	t.end();
 });
 
 test('fire input event', t => {

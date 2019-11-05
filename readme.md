@@ -1,8 +1,7 @@
-# insert-text-textarea [![(size)][badge-gzip]](#no-link) [![(status)][badge-travis]][link-travis]
+# insert-text-textarea [![][badge-gzip]](#link-npm)
 
   [badge-gzip]: https://img.shields.io/bundlephobia/minzip/insert-text-textarea.svg?label=gzipped
-  [badge-travis]: https://api.travis-ci.com/fregante/insert-text-textarea.svg?branch=master
-  [link-travis]: https://travis-ci.com/fregante/insert-text-textarea
+  [link-npm]: https://www.npmjs.com/package/insert-text-textarea
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
@@ -20,17 +19,16 @@ If you need IE support, use [insert-text-at-cursor](https://github.com/grassator
 
 ## Install
 
-```
+You can just download the [standalone bundle](https://packd.fregante.now.sh/insert-text-textarea@latest?name=insertText)
+
+Or use `npm`:
+
+```sh
 npm install insert-text-textarea
 ```
 
-## Setup
-
 ```js
-const insertText = require('insert-text-textarea');
-```
-
-```js
+// This module is only offered as a ES Module
 import insertText from 'insert-text-textarea';
 ```
 
