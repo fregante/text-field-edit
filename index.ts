@@ -1,12 +1,4 @@
-/** Replace selection with text, with Firefox support */
-export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
-	const document = textarea.ownerDocument!;
-	textarea.focus(); // The passed `textarea` may not be focused
-
-	if (document.execCommand('insertText', false, text)) {
-		return;
-	}
-
+function insertTextFirefox(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
 	textarea.setRangeText(
 		text,
@@ -20,4 +12,24 @@ export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElem
 		inputType: 'insertText',
 		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
 	}));
+}
+
+/** Replace selection with text, with Firefox support */
+export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+	const document = textarea.ownerDocument!;
+	const initialFocus = document.activeElement;
+	if (initialFocus !== textarea) {
+		textarea.focus();
+	}
+
+	if (!document.execCommand('insertText', false, text)) {
+		insertTextFirefox(textarea, text);
+	}
+
+	// TODO: Replace block with `blur-accessibly`
+	if (initialFocus === document.body) {
+		textarea.blur();
+	} else if (initialFocus instanceof HTMLElement && initialFocus !== textarea) {
+		initialFocus.focus();
+	}
 }

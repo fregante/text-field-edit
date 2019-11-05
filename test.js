@@ -13,6 +13,14 @@ const getField = (value = '', start = undefined, end = undefined, type = 'textar
 	return field;
 };
 
+test('preserve focused item, if focusable', t => {
+	t.equal(document.activeElement, document.body);
+	const textarea = getField();
+	insertText(textarea, 'A');
+	t.equal(document.activeElement, document.body);
+	t.end();
+});
+
 test('insert text in empty textarea', t => {
 	const textarea = getField();
 	t.equal(textarea.value, '');
