@@ -27,7 +27,7 @@
 		"prepare": "tsc",
 		"test": "npm-run-all --silent prepare --parallel test:*",
 		"test:blink": "browserify -p esmify test.js | tape-run",
-		"test:gecko": "if [ $CI ]; then browserify -p esmify test.js | tape-run --browser firefox; fi",
+		"test:gecko": "browserify -p esmify test.js | tape-run --browser firefox",
 		"test:lint": "xo",
 		"watch": "tsc --watch"
 	},
