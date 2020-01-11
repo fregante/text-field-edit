@@ -5,13 +5,16 @@
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
-> Insert text in a textarea and input[text] (supports Firefox and Undo, where possible)
+> Insert text in a `textarea` and `input[type=text]` (supports Firefox and Undo, where possible)
 
-The text will be inserted after the cursor and it will replace any text that's selected, acting like a `paste` would.
+The text will be inserted **after the cursor** or it will replace any text that's selected, acting like a `paste` would.
 
-This is useful when creating "editor" buttons, to add text or wrap the selected text. For example, this module is used by [indent-textarea](https://github.com/fregante/indent-textarea).
+You should use this instead of setting the `field.value` directly because:
 
-An `input` event will also be dispatched, with `event.inputType === 'insertText'`.
+- it doesn't break the undo history (in supported browsers)
+- it fires an `input` event (with `event.inputType === 'insertText'`)
+- it's the most efficient way of adding/replacing selected text in a field
+- it's cross-browser (modern browsers)
 
 It uses `document.execCommand('insertText')` in Chrome (which has **Undo** support) and it replicates its behavior in Firefox (without Undo support until [this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1220696) is solved).
 
@@ -34,21 +37,23 @@ import insertText from 'insert-text-textarea';
 
 ## Usage
 
+Insert text at the cursor, replacing any possible selected text:
+
 ```js
 const textarea = document.querySelector('textarea');
 const button = document.querySelector('.js-add-signature');
 button.addEventListener(event => {
-	// It will add this text at the cursor, replacing any possible selected text
 	insertText(textarea, 'Made by 🐝 with pollen.');
 });
 ```
+
+This will wrap the selected text (if any) with `**` on both sides:
 
 ```js
 const textarea = document.querySelector('textarea');
 const button = document.querySelector('.js-markdown-make-text-bold');
 button.addEventListener(event => {
-	// This will replace the selected text (if any) with **selected text**
-        // Don't use `getSelection()` if you want Firefox support
+	// Don't use `getSelection()` if you want Firefox support
 	const selectedText = value.slice(
 		textarea.selectionStart,
 		textarea.selectionEnd
@@ -57,8 +62,16 @@ button.addEventListener(event => {
 });
 ```
 
+This will replace the entire content, equivalent to `field.value = 'New text!'` but with **undo** support:
+
+```js
+const textarea = document.querySelector('textarea');
+textarea.select(); // The text needs to be selected so it will be replaced
+insertText(textarea, 'New text!');
+```
+
 # Related
 
-- [indent-textarea](https://github.com/fregante/indent-textarea) - Add editor-like tab-to-indent functionality to <textarea>, in a few bytes. Uses this module.
+- [indent-textarea](https://github.com/fregante/indent-textarea) - Add editor-like tab-to-indent functionality to `<textarea>`, in a few bytes. Uses this module.
 - [fit-textarea](https://github.com/fregante/fit-textarea) - Automatically expand a `<textarea>` to fit its content, in a few bytes.
 - [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.
