@@ -22,6 +22,8 @@
 		"index.js",
 		"index.d.ts"
 	],
+	"type": "module",
+	"module": "index.js",
 	"scripts": {
 		"build": "tsc",
 		"prepare": "tsc --sourceMap false",
