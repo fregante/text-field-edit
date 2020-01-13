@@ -24,8 +24,8 @@
 	],
 	"scripts": {
 		"build": "tsc",
-		"prepare": "tsc",
-		"test": "npm-run-all --silent prepare --parallel test:*",
+		"prepare": "tsc --sourceMap false",
+		"test": "npm-run-all --silent build --parallel test:*",
 		"test:blink": "browserify -p esmify test.js | tape-run --browser chrome",
 		"test:gecko": "browserify -p esmify test.js | tape-run --browser firefox",
 		"test:lint": "xo",
