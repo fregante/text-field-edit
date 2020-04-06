@@ -1,6 +1,6 @@
 {
-	"name": "insert-text-textarea",
-	"version": "2.0.1",
+	"name": "text-field-edit",
+	"version": "0.0.0",
 	"description": "Insert text in a textarea and input[text] (supports Firefox and Undo, where possible)",
 	"keywords": [
 		"at cursor",
@@ -16,7 +16,7 @@
 		"manipulation",
 		"text area"
 	],
-	"repository": "fregante/insert-text-textarea",
+	"repository": "fregante/text-field-edit",
 	"license": "MIT",
 	"files": [
 		"index.js",

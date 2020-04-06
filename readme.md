@@ -1,7 +1,7 @@
-# insert-text-textarea [![][badge-gzip]](#link-npm)
+# text-field-edit [![][badge-gzip]](#link-npm)
 
-  [badge-gzip]: https://img.shields.io/bundlephobia/minzip/insert-text-textarea.svg?label=gzipped
-  [link-npm]: https://www.npmjs.com/package/insert-text-textarea
+  [badge-gzip]: https://img.shields.io/bundlephobia/minzip/text-field-edit.svg?label=gzipped
+  [link-npm]: https://www.npmjs.com/package/text-field-edit
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
@@ -22,17 +22,17 @@ If you need IE support, use [insert-text-at-cursor](https://github.com/grassator
 
 ## Install
 
-You can just download the [standalone bundle](https://packd.fregante.now.sh/insert-text-textarea@latest?name=insertText)
+You can just download the [standalone bundle](https://packd.fregante.now.sh/text-field-edit@latest?name=insertText)
 
 Or use `npm`:
 
 ```sh
-npm install insert-text-textarea
+npm install text-field-edit
 ```
 
 ```js
 // This module is only offered as a ES Module
-import insertText from 'insert-text-textarea';
+import insertText from 'text-field-edit';
 ```
 
 ## Usage
