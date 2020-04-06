@@ -33,6 +33,28 @@ export function insert(textarea: HTMLTextAreaElement | HTMLInputElement, text: s
 	}
 }
 
+export function set(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+	field.select();
+	insert(field, text);
+}
+
+export function getSelection(field: HTMLTextAreaElement | HTMLInputElement): string {
+	return field.value.slice(field.selectionStart!, field.selectionEnd!);
+}
+
+export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wrap: string, wrapEnd?: string): void {
+	const {selectionStart, selectionEnd} = field;
+	const selection = getSelection(field);
+	insert(field, wrap + selection + (wrapEnd ?? wrap));
+
+	// Restore the selection around the previously-selected text
+	field.selectionStart = selectionStart! + wrap.length;
+	field.selectionEnd = selectionEnd! + wrap.length;
+}
+
 export default {
-	insert
+	insert,
+	set,
+	wrapSelection,
+	getSelection
 };

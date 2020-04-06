@@ -47,22 +47,88 @@ button.addEventListener(event => {
 });
 ```
 
-This will wrap the selected text (if any) with `**` on both sides:
+This will act like `field.value = 'New value'` but with **undo** support and by firing the `input` event:
 
 ```js
 const textarea = document.querySelector('textarea');
-const button = document.querySelector('.js-markdown-make-text-bold');
-button.addEventListener(event => {
-	textFieldEdit.wrap(textarea, '**');
+const resetButton = document.querySelector('.js-markdown-reset-field');
+resetButton.addEventListener(event => {
+	textFieldEdit.set(textarea, 'New value');
 });
 ```
 
-This will replace the entire content, equivalent to `field.value = 'New text!'` but with **undo** support:
+## API
+
+### textFieldEdit.insert(field, text)
+
+Inserts `text` at the cursor’s position, replacing any selection.
+
+```js
+const field = document.querySelector('input[type="text"]');
+textFieldEdit.insert(field, '🥳');
+// Changes field's value from 'Party|' to 'Party🥳|' (where | is the cursor)
+```
+
+#### field
+
+Type: `HTMLTextAreaElement` `HTMLInputElement`
+
+#### text
+
+Type: `string`
+
+The text to insert at the cursor's position.
+
+### textFieldEdit.set(field, text)
+
+Replaces the entire content, equivalent to `field.value = 'New text!'` but with **undo** support and by firing the `input` event:
 
 ```js
 const textarea = document.querySelector('textarea');
 textFieldEdit.set(textarea, 'New text!');
 ```
+
+#### field
+
+Type: `HTMLTextAreaElement` `HTMLInputElement`
+
+#### text
+
+Type: `string`
+
+The new value that the field will have.
+
+### textFieldEdit.wrapSelection(field, wrappingText[, endWrappingText])
+
+Adds the `wrappingText` before and after field's selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
+
+```js
+const field = document.querySelector('textarea');
+textFieldEdit.wrapSelection(field, '**');
+// Changes the field's value from 'I |love| gudeg' to 'I **|love|** gudeg' (where | marks the selected text)
+```
+
+```js
+const field = document.querySelector('textarea');
+textFieldEdit.wrapSelection(field, '(', ')');
+// Changes the field's value from '|almost| cool' to '(|almost|) cool' (where | marks the selected text)
+```
+
+### textFieldEdit.getSelection(field)
+
+Utility method to get the selected text in a field.
+
+```js
+const field = document.querySelector('textarea');
+textFieldEdit.getSelection(field);
+// => 'almost'
+// If the field's value is '|almost| cool' (where | marks the selected text)
+
+```
+
+#### field
+
+Type: `HTMLTextAreaElement` `HTMLInputElement`
 
 # Related
 

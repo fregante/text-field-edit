@@ -1,5 +1,5 @@
 import test from 'tape';
-import {insert} from '.';
+import {insert, set, getSelection, wrapSelection} from '.';
 
 const getField = (value = '', start = undefined, end = undefined, type = 'textarea') => {
 	const field = document.createElement(type);
@@ -13,7 +13,7 @@ const getField = (value = '', start = undefined, end = undefined, type = 'textar
 	return field;
 };
 
-test('preserve focused item, if focusable', t => {
+test('insert() preserves focused item, if focusable', t => {
 	t.equal(document.activeElement, document.body);
 	const textarea = getField();
 	insert(textarea, 'A');
@@ -21,7 +21,7 @@ test('preserve focused item, if focusable', t => {
 	t.end();
 });
 
-test('insert text in empty textarea', t => {
+test('insert() inserts text in empty textarea', t => {
 	const textarea = getField();
 	t.equal(textarea.value, '');
 	insert(textarea, 'a');
@@ -31,7 +31,7 @@ test('insert text in empty textarea', t => {
 	t.end();
 });
 
-test('insert text in empty input[type=text]', t => {
+test('insert() inserts text in empty input[type=text]', t => {
 	const textarea = getField('', undefined, undefined, 'input');
 	t.equal(textarea.value, '');
 	insert(textarea, 'a');
@@ -41,7 +41,7 @@ test('insert text in empty input[type=text]', t => {
 	t.end();
 });
 
-test('append text to unselected field', t => {
+test('insert() appends text to unselected field', t => {
 	const textarea = getField('W');
 	t.equal(textarea.value, 'W');
 	insert(textarea, 'O');
@@ -51,7 +51,7 @@ test('append text to unselected field', t => {
 	t.end();
 });
 
-test('insert text in the middle', t => {
+test('insert() inserts text in the middle', t => {
 	const textarea = getField('WO', 1, 1);
 	t.equal(textarea.value, 'WO');
 	insert(textarea, 'A');
@@ -61,7 +61,7 @@ test('insert text in the middle', t => {
 	t.end();
 });
 
-test('replace selected text', t => {
+test('insert() replaces selected text', t => {
 	const textarea = getField('WO', 0, 1);
 	t.equal(textarea.value, 'WO');
 	insert(textarea, 'A');
@@ -71,7 +71,7 @@ test('replace selected text', t => {
 	t.end();
 });
 
-test('fire input event', t => {
+test('insert() fires input event', t => {
 	const textarea = getField();
 	textarea.addEventListener('input', event => {
 		t.equal(event.type, 'input');
@@ -79,4 +79,54 @@ test('fire input event', t => {
 		t.end();
 	});
 	insert(textarea, 'A');
+});
+
+test('set() replaces the whole content', t => {
+	const textarea = getField('WO', 0, 1);
+	t.equal(textarea.value, 'WO');
+	set(textarea, 'ABC');
+	t.equal(textarea.value, 'ABC');
+	t.equal(textarea.selectionStart, 3);
+	t.equal(textarea.selectionEnd, 3);
+	t.end();
+});
+
+test('getSelection()', t => {
+	const textarea = getField('WOA', 1, 2);
+	t.equal(textarea.value, 'WOA');
+	t.equal(getSelection(textarea), 'O');
+	t.end();
+});
+
+test('getSelection() without selection', t => {
+	const textarea = getField('WOA', 3, 3);
+	t.equal(getSelection(textarea), '');
+	t.end();
+});
+
+test('wrapSelection() wraps selected text', t => {
+	const textarea = getField('WOA', 1, 2);
+	wrapSelection(textarea, '*');
+	t.equal(textarea.value, 'W*O*A');
+	t.equal(textarea.selectionStart, 2);
+	t.equal(textarea.selectionEnd, 3);
+	t.end();
+});
+
+test('wrapSelection() wraps selected text with different characters', t => {
+	const textarea = getField('WOA', 1, 2);
+	wrapSelection(textarea, '[', ']');
+	t.equal(textarea.value, 'W[O]A');
+	t.equal(textarea.selectionStart, 2);
+	t.equal(textarea.selectionEnd, 3);
+	t.end();
+});
+
+test('wrapSelection() adds wrapping characters even without selection', t => {
+	const textarea = getField('OA', 1, 1);
+	wrapSelection(textarea, '[', ']');
+	t.equal(textarea.value, 'O[]A');
+	t.equal(textarea.selectionStart, 2);
+	t.equal(textarea.selectionEnd, 2);
+	t.end();
 });
