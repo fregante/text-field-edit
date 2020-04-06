@@ -22,7 +22,7 @@ If you need IE support, use [insert-text-at-cursor](https://github.com/grassator
 
 ## Install
 
-You can just download the [standalone bundle](https://packd.fregante.now.sh/text-field-edit@latest?name=insertText)
+You can just download the [standalone bundle](https://packd.fregante.now.sh/text-field-edit)
 
 Or use `npm`:
 
@@ -32,7 +32,7 @@ npm install text-field-edit
 
 ```js
 // This module is only offered as a ES Module
-import insertText from 'text-field-edit';
+import textFieldEdit from 'text-field-edit';
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ Insert text at the cursor, replacing any possible selected text:
 const textarea = document.querySelector('textarea');
 const button = document.querySelector('.js-add-signature');
 button.addEventListener(event => {
-	insertText(textarea, 'Made by 🐝 with pollen.');
+	textFieldEdit.insert(textarea, 'Made by 🐝 with pollen.');
 });
 ```
 
@@ -53,12 +53,7 @@ This will wrap the selected text (if any) with `**` on both sides:
 const textarea = document.querySelector('textarea');
 const button = document.querySelector('.js-markdown-make-text-bold');
 button.addEventListener(event => {
-	// Don't use `getSelection()` if you want Firefox support
-	const selectedText = value.slice(
-		textarea.selectionStart,
-		textarea.selectionEnd
-	);
-	insertText(textarea, '**' + selectedText + '**');
+	textFieldEdit.wrap(textarea, '**');
 });
 ```
 
@@ -66,8 +61,7 @@ This will replace the entire content, equivalent to `field.value = 'New text!'` 
 
 ```js
 const textarea = document.querySelector('textarea');
-textarea.select(); // The text needs to be selected so it will be replaced
-insertText(textarea, 'New text!');
+textFieldEdit.set(textarea, 'New text!');
 ```
 
 # Related

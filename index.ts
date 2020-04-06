@@ -15,7 +15,7 @@ function insertTextFirefox(textarea: HTMLTextAreaElement | HTMLInputElement, tex
 }
 
 /** Replace selection with text, with Firefox support */
-export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+export function insert(textarea: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	const document = textarea.ownerDocument!;
 	const initialFocus = document.activeElement;
 	if (initialFocus !== textarea) {
@@ -26,10 +26,13 @@ export default function insertText(textarea: HTMLTextAreaElement | HTMLInputElem
 		insertTextFirefox(textarea, text);
 	}
 
-	// TODO: Replace block with `blur-accessibly`
 	if (initialFocus === document.body) {
 		textarea.blur();
 	} else if (initialFocus instanceof HTMLElement && initialFocus !== textarea) {
 		initialFocus.focus();
 	}
 }
+
+export default {
+	insert
+};
