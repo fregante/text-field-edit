@@ -1,7 +1,7 @@
 {
 	"name": "text-field-edit",
 	"version": "3.0.0-0",
-	"description": "Insert text in a textarea and input[text] (supports Firefox and Undo, where possible)",
+	"description": "Insert text in a <textarea> and <input> (supports Firefox and Undo, where possible)",
 	"keywords": [
 		"at cursor",
 		"cross-browser",
@@ -12,6 +12,7 @@
 		"field",
 		"form",
 		"inject",
+		"event",
 		"inserttext",
 		"manipulation",
 		"text area"
@@ -26,7 +27,7 @@
 	"module": "index.js",
 	"scripts": {
 		"build": "tsc",
-		"prepare": "tsc --sourceMap false",
+		"prepublishOnly": "tsc --sourceMap false",
 		"test": "npm-run-all --silent build --parallel test:*",
 		"test:blink": "browserify -p esmify test.js | tape-run --browser chrome",
 		"test:gecko": "browserify -p esmify test.js | tape-run --browser firefox",
