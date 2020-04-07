@@ -35,7 +35,7 @@ import * as textFieldEdit from 'text-field-edit';
 
 ## Usage
 
-Insert text at the cursor, replacing any possible selected text:
+Insert text at the cursor, replacing any possible selected text, acting like a `paste` would:
 
 ```js
 const input = document.querySelector('input');
@@ -69,7 +69,7 @@ textFieldEdit.insert(field, '🥳');
 
 #### field
 
-Type: `HTMLTextAreaElement` `HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement`
 
 #### text
 
@@ -88,7 +88,7 @@ textFieldEdit.set(textarea, 'New text!');
 
 #### field
 
-Type: `HTMLTextAreaElement` `HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement`
 
 #### text
 
@@ -96,9 +96,9 @@ Type: `string`
 
 The new value that the field will have.
 
-### textFieldEdit.wrapSelection(field, wrappingText[, endWrappingText])
+### textFieldEdit.wrapSelection(field, wrappingText, endWrappingText?)
 
-Adds the `wrappingText` before and after field's selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
+Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
 
 ```js
 const field = document.querySelector('textarea');
@@ -114,7 +114,7 @@ textFieldEdit.wrapSelection(field, '(', ')');
 
 ### textFieldEdit.getSelection(field)
 
-Utility method to get the selected text in a field.
+Utility method to get the selected text in a field or an empty string if nothing is selected.
 
 ```js
 const field = document.querySelector('textarea');
@@ -126,7 +126,7 @@ textFieldEdit.getSelection(field);
 
 #### field
 
-Type: `HTMLTextAreaElement` `HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement`
 
 # Related
 

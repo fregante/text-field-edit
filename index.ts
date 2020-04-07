@@ -14,6 +14,7 @@ function insertTextFirefox(field: HTMLTextAreaElement | HTMLInputElement, text: 
 	}));
 }
 
+/** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
 export function insert(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	const document = field.ownerDocument!;
 	const initialFocus = document.activeElement;
@@ -32,15 +33,18 @@ export function insert(field: HTMLTextAreaElement | HTMLInputElement, text: stri
 	}
 }
 
+/** Replaces the entire content, equivalent to `field.value = text` but with **undo** support and by firing the `input` event. */
 export function set(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
 	field.select();
 	insert(field, text);
 }
 
+/** Get the selected text in a field or an empty string if nothing is selected. */
 export function getSelection(field: HTMLTextAreaElement | HTMLInputElement): string {
 	return field.value.slice(field.selectionStart!, field.selectionEnd!);
 }
 
+/** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
 export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wrap: string, wrapEnd?: string): void {
 	const {selectionStart, selectionEnd} = field;
 	const selection = getSelection(field);
