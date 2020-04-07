@@ -5,9 +5,7 @@
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
-> Insert text in a `textarea` and `input[type=text]` (supports Firefox and Undo, where possible)
-
-The text will be inserted **after the cursor** or it will replace any text that's selected, acting like a `paste` would.
+> Insert text in a `<textarea>` and `<input>` (supports Firefox and Undo, where possible)
 
 You should use this instead of setting the `field.value` directly because:
 
@@ -40,10 +38,10 @@ import textFieldEdit from 'text-field-edit';
 Insert text at the cursor, replacing any possible selected text:
 
 ```js
-const textarea = document.querySelector('textarea');
+const input = document.querySelector('input');
 const button = document.querySelector('.js-add-signature');
 button.addEventListener(event => {
-	textFieldEdit.insert(textarea, 'Made by 🐝 with pollen.');
+	textFieldEdit.insert(input, 'Made by 🐝 with pollen.');
 });
 ```
 
