@@ -50,10 +50,3 @@ export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wra
 	field.selectionStart = selectionStart! + wrap.length;
 	field.selectionEnd = selectionEnd! + wrap.length;
 }
-
-export default {
-	insert,
-	set,
-	wrapSelection,
-	getSelection
-};

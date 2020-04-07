@@ -1,5 +1,5 @@
 import test from 'tape';
-import {insert, set, getSelection, wrapSelection} from '.';
+import * as textFieldEdit from '.';
 
 const getField = (value = '', start = undefined, end = undefined, type = 'textarea') => {
 	const field = document.createElement(type);
@@ -16,7 +16,7 @@ const getField = (value = '', start = undefined, end = undefined, type = 'textar
 test('insert() preserves focused item, if focusable', t => {
 	t.equal(document.activeElement, document.body);
 	const field = getField();
-	insert(field, 'A');
+	textFieldEdit.insert(field, 'A');
 	t.equal(document.activeElement, document.body);
 	t.end();
 });
@@ -24,7 +24,7 @@ test('insert() preserves focused item, if focusable', t => {
 test('insert() inserts text in empty field', t => {
 	const field = getField();
 	t.equal(field.value, '');
-	insert(field, 'a');
+	textFieldEdit.insert(field, 'a');
 	t.equal(field.value, 'a');
 	t.equal(field.selectionStart, 1);
 	t.equal(field.selectionEnd, 1);
@@ -34,7 +34,7 @@ test('insert() inserts text in empty field', t => {
 test('insert() inserts text in empty input element', t => {
 	const field = getField('', undefined, undefined, 'input');
 	t.equal(field.value, '');
-	insert(field, 'a');
+	textFieldEdit.insert(field, 'a');
 	t.equal(field.value, 'a');
 	t.equal(field.selectionStart, 1);
 	t.equal(field.selectionEnd, 1);
@@ -44,7 +44,7 @@ test('insert() inserts text in empty input element', t => {
 test('insert() appends text to unselected field', t => {
 	const field = getField('W');
 	t.equal(field.value, 'W');
-	insert(field, 'O');
+	textFieldEdit.insert(field, 'O');
 	t.equal(field.value, 'WO');
 	t.equal(field.selectionStart, 2);
 	t.equal(field.selectionEnd, 2);
@@ -54,7 +54,7 @@ test('insert() appends text to unselected field', t => {
 test('insert() inserts text in the middle', t => {
 	const field = getField('WO', 1, 1);
 	t.equal(field.value, 'WO');
-	insert(field, 'A');
+	textFieldEdit.insert(field, 'A');
 	t.equal(field.value, 'WAO');
 	t.equal(field.selectionStart, 2);
 	t.equal(field.selectionEnd, 2);
@@ -64,7 +64,7 @@ test('insert() inserts text in the middle', t => {
 test('insert() replaces selected text', t => {
 	const field = getField('WO', 0, 1);
 	t.equal(field.value, 'WO');
-	insert(field, 'A');
+	textFieldEdit.insert(field, 'A');
 	t.equal(field.value, 'AO');
 	t.equal(field.selectionStart, 1);
 	t.equal(field.selectionEnd, 1);
@@ -78,13 +78,13 @@ test('insert() fires input event', t => {
 		// TODO: t.equal(event.inputType, 'insert');
 		t.end();
 	});
-	insert(field, 'A');
+	textFieldEdit.insert(field, 'A');
 });
 
 test('set() replaces the whole content', t => {
 	const field = getField('WO', 0, 1);
 	t.equal(field.value, 'WO');
-	set(field, 'ABC');
+	textFieldEdit.set(field, 'ABC');
 	t.equal(field.value, 'ABC');
 	t.equal(field.selectionStart, 3);
 	t.equal(field.selectionEnd, 3);
@@ -94,19 +94,19 @@ test('set() replaces the whole content', t => {
 test('getSelection()', t => {
 	const field = getField('WOA', 1, 2);
 	t.equal(field.value, 'WOA');
-	t.equal(getSelection(field), 'O');
+	t.equal(textFieldEdit.getSelection(field), 'O');
 	t.end();
 });
 
 test('getSelection() without selection', t => {
 	const field = getField('WOA', 3, 3);
-	t.equal(getSelection(field), '');
+	t.equal(textFieldEdit.getSelection(field), '');
 	t.end();
 });
 
 test('wrapSelection() wraps selected text', t => {
 	const field = getField('WOA', 1, 2);
-	wrapSelection(field, '*');
+	textFieldEdit.wrapSelection(field, '*');
 	t.equal(field.value, 'W*O*A');
 	t.equal(field.selectionStart, 2);
 	t.equal(field.selectionEnd, 3);
@@ -115,7 +115,7 @@ test('wrapSelection() wraps selected text', t => {
 
 test('wrapSelection() wraps selected text with different characters', t => {
 	const field = getField('WOA', 1, 2);
-	wrapSelection(field, '[', ']');
+	textFieldEdit.wrapSelection(field, '[', ']');
 	t.equal(field.value, 'W[O]A');
 	t.equal(field.selectionStart, 2);
 	t.equal(field.selectionEnd, 3);
@@ -124,7 +124,7 @@ test('wrapSelection() wraps selected text with different characters', t => {
 
 test('wrapSelection() adds wrapping characters even without selection', t => {
 	const field = getField('OA', 1, 1);
-	wrapSelection(field, '[', ']');
+	textFieldEdit.wrapSelection(field, '[', ']');
 	t.equal(field.value, 'O[]A');
 	t.equal(field.selectionStart, 2);
 	t.equal(field.selectionEnd, 2);

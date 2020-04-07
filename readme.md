@@ -30,7 +30,7 @@ npm install text-field-edit
 
 ```js
 // This module is only offered as a ES Module
-import textFieldEdit from 'text-field-edit';
+import * as textFieldEdit from 'text-field-edit';
 ```
 
 ## Usage
