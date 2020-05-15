@@ -98,7 +98,7 @@ The new value that the field will have.
 
 ### textFieldEdit.wrapSelection(field, wrappingText, endWrappingText?)
 
-Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
+Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` on the right.
 
 ```js
 const field = document.querySelector('textarea');
