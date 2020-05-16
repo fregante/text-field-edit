@@ -96,6 +96,37 @@ Type: `string`
 
 The new value that the field will have.
 
+### textFieldEdit.replace(field, searchValue, replacement)
+
+Finds and replaces strings and regular expressions in the field’s value, like `field.value = field.value.replace()` but leaves the last replacement selected like a text editor would.
+
+Similar to [String#replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+
+```js
+const textarea = document.querySelector('textarea');
+textarea.value = 'Hello world';
+textFieldEdit.replace(textarea, 'Hello', 'Ciao');
+// Changes field's value from 'Hello world' to '|Ciao| world' (where | marks the selected text)
+```
+
+#### field
+
+Type: `HTMLTextAreaElement | HTMLInputElement`
+
+#### searchValue
+
+Type: `string | RegExp`
+
+The text to replace in the field’s value.
+
+#### replacement
+
+Type: `string | function`
+
+The text that will replace `searchValue` or a callback function that matches [the signature in `String#replace`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_function_as_a_parameter).
+
+**Note**: replacement patterns (`replace(field, /hello (world)/, 'ciao $1')`) aren't supported.
+
 ### textFieldEdit.wrapSelection(field, wrappingText, endWrappingText?)
 
 Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
