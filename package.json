@@ -39,7 +39,9 @@
 			"browser"
 		],
 		"rules": {
-			"@typescript-eslint/prefer-nullish-coalescing": "off"
+			"@typescript-eslint/no-unnecessary-type-assertion": "off",
+			"@typescript-eslint/prefer-nullish-coalescing": "off",
+			"@typescript-eslint/prefer-readonly-parameter-types": "off"
 		}
 	},
 	"devDependencies": {
@@ -50,6 +52,6 @@
 		"tape": "^5.0.0",
 		"tape-run": "^7.0.0",
 		"typescript": "^3.8.3",
-		"xo": "*"
+		"xo": "^0.30.0"
 	}
 }

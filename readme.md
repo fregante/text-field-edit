@@ -1,7 +1,7 @@
 # text-field-edit [![][badge-gzip]](#link-npm)
 
-  [badge-gzip]: https://img.shields.io/bundlephobia/minzip/text-field-edit.svg?label=gzipped
-  [link-npm]: https://www.npmjs.com/package/text-field-edit
+[badge-gzip]: https://img.shields.io/bundlephobia/minzip/text-field-edit.svg?label=gzipped
+[link-npm]: https://www.npmjs.com/package/text-field-edit
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
