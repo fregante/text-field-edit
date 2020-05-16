@@ -54,3 +54,24 @@ export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wra
 	field.selectionStart = selectionStart! + wrap.length;
 	field.selectionEnd = selectionEnd! + wrap.length;
 }
+
+type ReplacerCallback = (substring: string, ...args: any[]) => string;
+
+/** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
+function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: string | RegExp, replacer: string | ReplacerCallback): void {
+	let drift = 0;
+	field.value.replace(searchValue, (...args): string => {
+		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
+		const [match] = args;
+		args.pop(); // Same as `field.value`
+		const offset: number = args.pop();
+		field.selectionStart = drift + offset;
+		field.selectionEnd = drift + offset + match.length;
+		insert(field, replacement);
+		field.selectionStart = drift + offset;
+		drift += replacement.length - match.length;
+		return replacement;
+	});
+}
+
+export {replace};

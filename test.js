@@ -123,3 +123,73 @@ test('wrapSelection() adds wrapping characters even without selection', t => {
 	t.equal(getState(field), 'O[|]A');
 	t.end();
 });
+
+test('replace() supports strings', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, 'A', 'THE ');
+	t.equal(getState(field), '{THE }BACUS');
+	textFieldEdit.replace(field, 'BA', 'AR');
+	t.equal(getState(field), 'THE {AR}CUS');
+	t.end();
+});
+
+test('replace() supports strings with a replacer function', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, 'A', (match, index, string) => {
+		t.equal(match, 'A');
+		t.equal(index, 0);
+		t.equal(string, 'ABACUS');
+		return match.toLowerCase();
+	});
+	t.equal(getState(field), '{a}BACUS');
+	t.end();
+});
+
+test('replace() supports regex', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, /a/i, 'U');
+	t.equal(getState(field), '{U}BACUS');
+	textFieldEdit.replace(field, /[ab]{2}/i, 'NI');
+	t.equal(getState(field), 'U{NI}CUS');
+	t.end();
+});
+
+test('replace() supports regex with a replacer function', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, /a/i, (match, index, string) => {
+		t.equal(match, 'A');
+		t.equal(index, 0);
+		t.equal(string, 'ABACUS');
+		return match.toLowerCase();
+	});
+	t.equal(getState(field), '{a}BACUS');
+	t.end();
+});
+
+test('replace() supports regex with global flag', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, /A/g, 'WOW');
+	t.equal(getState(field), 'WOWB{WOW}CUS');
+	t.end();
+});
+
+test('replace() supports regex with global flag with a replacer function', t => {
+	const field = getField('Abacus');
+	let i = 0;
+	textFieldEdit.replace(field, /a/gi, (match, index, string) => {
+		if (i === 0) {
+			t.equal(match, 'A');
+			t.equal(index, 0);
+			t.equal(string, 'Abacus');
+		} else {
+			t.equal(match, 'a');
+			t.equal(index, 2);
+			t.equal(string, 'Abacus');
+		}
+
+		i++;
+		return '[' + match + ']';
+	});
+	t.equal(getState(field), '[A]b{[a]}cus');
+	t.end();
+});
