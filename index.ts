@@ -59,17 +59,22 @@ type ReplacerCallback = (substring: string, ...args: any[]) => string;
 
 /** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
 function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: string | RegExp, replacer: string | ReplacerCallback): void {
+	/** Remembers how much each match offset should be adjusted */
 	let drift = 0;
+
 	field.value.replace(searchValue, (...args): string => {
+		// Select current match to replace it later
+		const matchStart = drift + (args[args.length - 2] as number);
+		const matchLength = args[0].length;
+		field.selectionStart = matchStart;
+		field.selectionEnd = matchStart + matchLength;
+
 		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
-		const [match] = args;
-		args.pop(); // Same as `field.value`
-		const offset: number = args.pop();
-		field.selectionStart = drift + offset;
-		field.selectionEnd = drift + offset + match.length;
 		insert(field, replacement);
-		field.selectionStart = drift + offset;
-		drift += replacement.length - match.length;
+
+		// Select replacement. Without this, the cursor would be after the replacement
+		field.selectionStart = matchStart;
+		drift += replacement.length - matchLength;
 		return replacement;
 	});
 }

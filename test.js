@@ -166,10 +166,29 @@ test('replace() supports regex with a replacer function', t => {
 	t.end();
 });
 
-test('replace() supports regex with global flag', t => {
+test('replace() supports regex with groups with a replacer function', t => {
 	const field = getField('ABACUS');
-	textFieldEdit.replace(field, /A/g, 'WOW');
-	t.equal(getState(field), 'WOWB{WOW}CUS');
+	textFieldEdit.replace(field, /ba(c)us/i, (match, group1, index) => {
+		t.equal(match, 'BACUS');
+		t.equal(index, 1);
+		t.equal(group1, 'C');
+		return match.toLowerCase();
+	});
+	t.equal(getState(field), 'A{bacus}');
+	t.end();
+});
+
+test('replace() supports regex with groups with replacement patterns (not supported)', t => {
+	const field = getField('ABA');
+	textFieldEdit.replace(field, /(b)/i, '($1)');
+	t.equal(getState(field), 'A{($1)}A'); // TODO: This should be A(B)A
+	t.end();
+});
+
+test('replace() supports regex with global flag', t => {
+	const field = getField('1a23cd456');
+	textFieldEdit.replace(field, /\d+/g, '**');
+	t.equal(getState(field), '**a**cd{**}');
 	t.end();
 });
 
