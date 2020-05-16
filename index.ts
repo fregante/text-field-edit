@@ -58,7 +58,7 @@ export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wra
 type ReplacerCallback = (substring: string, ...args: any[]) => string;
 
 /** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
-function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: string | RegExp, replacer: string | ReplacerCallback): void {
+export function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: string | RegExp, replacer: string | ReplacerCallback): void {
 	/** Remembers how much each match offset should be adjusted */
 	let drift = 0;
 
@@ -78,5 +78,3 @@ function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: str
 		return replacement;
 	});
 }
-
-export {replace};
