@@ -20,7 +20,7 @@ If you need IE support, use [insert-text-at-cursor](https://github.com/grassator
 
 ## Install
 
-You can just download the [standalone bundle](https://packd.fregante.now.sh/text-field-edit)
+You can download the [standalone bundle](https://bundle.fregante.com/?pkg=text-field-edit)
 
 Or use `npm`:
 
