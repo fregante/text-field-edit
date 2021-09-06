@@ -1,7 +1,7 @@
 {
 	"name": "text-field-edit",
 	"version": "3.1.0",
-	"description": "Insert text in a <textarea> and <input> (supports Firefox and Undo, where possible)",
+	"description": "Insert text in a `<textarea>` and `<input>` (including Undo in most browsers)",
 	"keywords": [
 		"at cursor",
 		"cross-browser",
@@ -10,6 +10,8 @@
 		"editor",
 		"execCommand",
 		"field",
+		"firefox",
+		"safari",
 		"form",
 		"inject",
 		"event",
@@ -45,13 +47,13 @@
 		}
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^0.7.0",
-		"browserify": "^16.5.1",
+		"@sindresorhus/tsconfig": "^2.0.0",
+		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
 		"npm-run-all": "^4.1.5",
-		"tape": "^5.0.0",
-		"tape-run": "^7.0.0",
-		"typescript": "^3.8.3",
-		"xo": "^0.30.0"
+		"tape": "^5.3.1",
+		"tape-run": "^9.0.0",
+		"typescript": "^4.4.2",
+		"xo": "^0.44.0"
 	}
 }

@@ -1,21 +1,28 @@
-function insertTextFirefox(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+function insertTextFirefox(
+	field: HTMLTextAreaElement | HTMLInputElement,
+	text: string,
+): void {
 	// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
 	field.setRangeText(
 		text,
 		field.selectionStart || 0,
 		field.selectionEnd || 0,
-		'end' // Without this, the cursor is either at the beginning or `text` remains selected
+		'end', // Without this, the cursor is either at the beginning or `text` remains selected
 	);
 
-	field.dispatchEvent(new InputEvent('input', {
-		data: text,
-		inputType: 'insertText',
-		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
-	}));
+	field.dispatchEvent(
+		new InputEvent('input', {
+			data: text,
+			inputType: 'insertText',
+		}),
+	);
 }
 
 /** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
-export function insert(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+export function insert(
+	field: HTMLTextAreaElement | HTMLInputElement,
+	text: string,
+): void {
 	const document = field.ownerDocument!;
 	const initialFocus = document.activeElement;
 	if (initialFocus !== field) {
@@ -34,18 +41,27 @@ export function insert(field: HTMLTextAreaElement | HTMLInputElement, text: stri
 }
 
 /** Replaces the entire content, equivalent to `field.value = text` but with **undo** support and by firing the `input` event. */
-export function set(field: HTMLTextAreaElement | HTMLInputElement, text: string): void {
+export function set(
+	field: HTMLTextAreaElement | HTMLInputElement,
+	text: string,
+): void {
 	field.select();
 	insert(field, text);
 }
 
 /** Get the selected text in a field or an empty string if nothing is selected. */
-export function getSelection(field: HTMLTextAreaElement | HTMLInputElement): string {
+export function getSelection(
+	field: HTMLTextAreaElement | HTMLInputElement,
+): string {
 	return field.value.slice(field.selectionStart!, field.selectionEnd!);
 }
 
 /** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
-export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wrap: string, wrapEnd?: string): void {
+export function wrapSelection(
+	field: HTMLTextAreaElement | HTMLInputElement,
+	wrap: string,
+	wrapEnd?: string,
+): void {
 	const {selectionStart, selectionEnd} = field;
 	const selection = getSelection(field);
 	insert(field, wrap + selection + (wrapEnd ?? wrap));
@@ -58,7 +74,11 @@ export function wrapSelection(field: HTMLTextAreaElement | HTMLInputElement, wra
 type ReplacerCallback = (substring: string, ...args: any[]) => string;
 
 /** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
-export function replace(field: HTMLTextAreaElement | HTMLInputElement, searchValue: string | RegExp, replacer: string | ReplacerCallback): void {
+export function replace(
+	field: HTMLTextAreaElement | HTMLInputElement,
+	searchValue: string | RegExp,
+	replacer: string | ReplacerCallback,
+): void {
 	/** Remembers how much each match offset should be adjusted */
 	let drift = 0;
 
