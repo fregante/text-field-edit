@@ -1,7 +1,7 @@
 {
 	"name": "text-field-edit",
 	"version": "3.1.0",
-	"description": "Insert text in a <textarea> and <input> (supports Firefox and Undo, where possible)",
+	"description": "Insert text in a `<textarea>` and `<input>` (including Undo in most browsers)",
 	"keywords": [
 		"at cursor",
 		"cross-browser",
@@ -10,6 +10,8 @@
 		"editor",
 		"execCommand",
 		"field",
+		"firefox",
+		"safari",
 		"form",
 		"inject",
 		"event",

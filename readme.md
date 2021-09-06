@@ -5,18 +5,16 @@
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
-> Insert text in a `<textarea>` and `<input>` (supports Firefox and Undo, where possible)
+> Insert text in a `<textarea>` and `<input>` (including Undo in most browsers)
 
 You should use this instead of setting the `field.value` directly because:
 
-- it doesn't break the undo history (in supported browsers)
+- it doesn't break the undo history (in Chrome, Firefox, and Safari)
 - it fires an `input` event (with `event.inputType === 'insertText'`)
 - it's the most efficient way of adding/replacing selected text in a field
 - it's cross-browser (modern browsers)
 
-It uses `document.execCommand('insertText')` in Chrome (which has **Undo** support) and it replicates its behavior in Firefox (without Undo support until [this bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1220696) is solved).
-
-If you need IE support, use [insert-text-at-cursor](https://github.com/grassator/insert-text-at-cursor).
+It uses `document.execCommand('insertText')` under the hood. [Firefox added support for Undo](https://bugzilla.mozilla.org/show_bug.cgi?id=1220696) in Firefox 89 (June 2021). If you need IE support, use [insert-text-at-cursor](https://github.com/grassator/insert-text-at-cursor).
 
 ## Install
 
