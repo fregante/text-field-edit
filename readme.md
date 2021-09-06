@@ -127,7 +127,7 @@ The text that will replace `searchValue` or a callback function that matches [th
 
 ### textFieldEdit.wrapSelection(field, wrappingText, endWrappingText?)
 
-Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right.
+Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` on the right.
 
 ```js
 const field = document.querySelector('textarea');
