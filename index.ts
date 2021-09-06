@@ -10,7 +10,6 @@ function insertTextFirefox(field: HTMLTextAreaElement | HTMLInputElement, text: 
 	field.dispatchEvent(new InputEvent('input', {
 		data: text,
 		inputType: 'insertText',
-		isComposing: false, // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 }
 
