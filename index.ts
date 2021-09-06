@@ -4,13 +4,13 @@ function insertTextFirefox(field: HTMLTextAreaElement | HTMLInputElement, text: 
 		text,
 		field.selectionStart || 0,
 		field.selectionEnd || 0,
-		'end' // Without this, the cursor is either at the beginning or `text` remains selected
+		'end', // Without this, the cursor is either at the beginning or `text` remains selected
 	);
 
 	field.dispatchEvent(new InputEvent('input', {
 		data: text,
 		inputType: 'insertText',
-		isComposing: false // TODO: fix @types/jsdom, this shouldn't be required
+		isComposing: false, // TODO: fix @types/jsdom, this shouldn't be required
 	}));
 }
 
