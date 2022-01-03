@@ -22,7 +22,8 @@
 	"repository": "fregante/text-field-edit",
 	"license": "MIT",
 	"type": "module",
-	"module": "index.js",
+	"main": "index.js",
+ 	"module": "index.js",
 	"files": [
 		"index.js",
 		"index.d.ts"
