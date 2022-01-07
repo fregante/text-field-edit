@@ -20,10 +20,13 @@
 		"text area"
 	],
 	"repository": "fregante/text-field-edit",
+	"funding": "https://github.com/sponsors/fregante",
 	"license": "MIT",
+	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
+	"sideEffects": false,
 	"type": "module",
 	"main": "index.js",
- 	"module": "index.js",
+	"module": "index.js",
 	"files": [
 		"index.js",
 		"index.d.ts"
@@ -52,9 +55,9 @@
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
 		"npm-run-all": "^4.1.5",
-		"tape": "^5.3.1",
+		"tape": "^5.4.0",
 		"tape-run": "^9.0.0",
-		"typescript": "^4.4.2",
-		"xo": "^0.44.0"
+		"typescript": "^4.5.4",
+		"xo": "^0.47.0"
 	}
 }
