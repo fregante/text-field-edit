@@ -80,6 +80,13 @@ test('insert() replaces selected text', t => {
 	t.end();
 });
 
+test('insert() replaces selected text even if string is ""', t => {
+	const field = getField('{W}O');
+	textFieldEdit.insert(field, '');
+	t.equal(getState(field), '|O');
+	t.end();
+});
+
 test('insert() fires input event', t => {
 	const field = getField();
 	field.addEventListener('input', event => {

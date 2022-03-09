@@ -1,3 +1,12 @@
+// https://github.com/fregante/text-field-edit/issues/16
+function safeTextInsert(text: string): boolean {
+	if (text === '') {
+		return document.execCommand('delete');
+	}
+
+	return document.execCommand('insertText', false, text);
+}
+
 function insertTextFirefox(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	text: string,
@@ -29,7 +38,7 @@ export function insert(
 		field.focus();
 	}
 
-	if (!document.execCommand('insertText', false, text)) {
+	if (!safeTextInsert(text)) {
 		insertTextFirefox(field, text);
 	}
 
