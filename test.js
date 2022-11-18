@@ -146,6 +146,15 @@ test('replace() supports strings', t => {
 	t.end();
 });
 
+test('replace() supports strings with cursor placed after replaced text', t => {
+	const field = getField('ABACUS');
+	textFieldEdit.replace(field, 'A', 'THE ', 'after-replacement');
+	t.equal(getState(field), 'THE |BACUS');
+	textFieldEdit.replace(field, 'BA', 'AR', 'after-replacement');
+	t.equal(getState(field), 'THE AR|CUS');
+	t.end();
+});
+
 test('replace() supports strings with a replacer function', t => {
 	const field = getField('ABACUS');
 	textFieldEdit.replace(field, 'A', (match, index, string) => {

@@ -87,6 +87,7 @@ export function replace(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	searchValue: string | RegExp,
 	replacer: string | ReplacerCallback,
+	cursor: 'select' | 'after-replacement' = 'select',
 ): void {
 	/** Remembers how much each match offset should be adjusted */
 	let drift = 0;
@@ -101,8 +102,11 @@ export function replace(
 		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
 		insert(field, replacement);
 
-		// Select replacement. Without this, the cursor would be after the replacement
-		field.selectionStart = matchStart;
+		if (cursor === 'select') {
+			// Select replacement. Without this, the cursor would be after the replacement
+			field.selectionStart = matchStart;
+		}
+
 		drift += replacement.length - matchLength;
 		return replacement;
 	});
