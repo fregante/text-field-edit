@@ -8,31 +8,29 @@ jobs:
   Types:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
 
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: npx xo
 
   Firefox:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
-      - run: sudo apt-get install xvfb
-      - run: xvfb-run --auto-servernum npm run test:gecko
+      - run: xvfb-run npm run test:gecko
 
   Chrome:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
-      - run: sudo apt-get install xvfb
-      - run: xvfb-run --auto-servernum npm run test:blink
+      - run: xvfb-run npm run test:blink
