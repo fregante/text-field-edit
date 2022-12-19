@@ -111,3 +111,6 @@ export function replace(
 		return replacement;
 	});
 }
+
+const textFieldEdit = {insert, set, replace, wrapSelection};
+export default textFieldEdit;
