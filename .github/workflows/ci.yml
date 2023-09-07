@@ -27,7 +27,7 @@ jobs:
       - run: tsc
       - run: xvfb-run npm run test:gecko
         timeout-minutes: 2
-      - run: echo If tests timeout, there's likely an issue in the tests
+      - run: echo "If tests timeout, there's likely an issue in the tests"
 
   Chrome:
     runs-on: ubuntu-latest
@@ -37,4 +37,4 @@ jobs:
       - run: tsc
       - run: xvfb-run npm run test:blink
         timeout-minutes: 2
-      - run: echo If tests timeout, there's likely an issue in the tests
+      - run: echo "If tests timeout, there's likely an issue in the tests"
