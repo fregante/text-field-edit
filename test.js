@@ -1,5 +1,5 @@
 import test from 'tape';
-import * as textFieldEdit from '.';
+import textFieldEdit from '.';
 
 function getField(state = '|', type = 'textarea') {
 	const field = document.createElement(type);

@@ -1,5 +1,5 @@
 /** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
-export function insert(
+export function insertTextIntoField(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	text: string,
 ): void {
@@ -24,30 +24,30 @@ export function insert(
 }
 
 /** Replaces the entire content, equivalent to `field.value = text` but with **undo** support and by firing the `input` event. */
-export function set(
+export function setFieldText(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	text: string,
 ): void {
 	field.select();
-	insert(field, text);
+	insertTextIntoField(field, text);
 }
 
 /** Get the selected text in a field or an empty string if nothing is selected. */
-export function getSelection(
+export function getFieldSelection(
 	field: HTMLTextAreaElement | HTMLInputElement,
 ): string {
 	return field.value.slice(field.selectionStart!, field.selectionEnd!);
 }
 
 /** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
-export function wrapSelection(
+export function wrapFieldSelection(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	wrap: string,
 	wrapEnd?: string,
 ): void {
 	const {selectionStart, selectionEnd} = field;
-	const selection = getSelection(field);
-	insert(field, wrap + selection + (wrapEnd ?? wrap));
+	const selection = getFieldSelection(field);
+	insertTextIntoField(field, wrap + selection + (wrapEnd ?? wrap));
 
 	// Restore the selection around the previously-selected text
 	field.selectionStart = selectionStart! + wrap.length;
@@ -57,7 +57,7 @@ export function wrapSelection(
 type ReplacerCallback = (substring: string, ...args: any[]) => string;
 
 /** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
-export function replace(
+export function replaceFieldText(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	searchValue: string | RegExp,
 	replacer: string | ReplacerCallback,
@@ -74,7 +74,7 @@ export function replace(
 		field.selectionEnd = matchStart + matchLength;
 
 		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
-		insert(field, replacement);
+		insertTextIntoField(field, replacement);
 
 		if (cursor === 'select') {
 			// Select replacement. Without this, the cursor would be after the replacement
@@ -86,5 +86,27 @@ export function replace(
 	});
 }
 
-const textFieldEdit = {insert, set, replace, wrapSelection};
+/** @deprecated Import `insertTextIntoField` instead */
+export const insert = insertTextIntoField;
+
+/** @deprecated Import `setFieldText` instead */
+export const set = setFieldText;
+
+/** @deprecated Import `replaceFieldText` instead */
+export const replace = replaceFieldText;
+
+/** @deprecated Import `wrapFieldSelection` instead */
+export const wrapSelection = wrapFieldSelection;
+
+/** @deprecated Import `getFieldSelection` instead */
+export const getSelection = getFieldSelection;
+
+// Note: Don't reuse deprecated constant from above
+const textFieldEdit = {
+	insert: insertTextIntoField,
+	set: setFieldText,
+	replace: replaceFieldText,
+	wrapSelection: wrapFieldSelection,
+	getSelection: getFieldSelection,
+} as const;
 export default textFieldEdit;
