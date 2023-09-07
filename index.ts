@@ -1,32 +1,3 @@
-// https://github.com/fregante/text-field-edit/issues/16
-function safeTextInsert(text: string): boolean {
-	if (text === '') {
-		return document.execCommand('delete');
-	}
-
-	return document.execCommand('insertText', false, text);
-}
-
-function insertTextFirefox(
-	field: HTMLTextAreaElement | HTMLInputElement,
-	text: string,
-): void {
-	// Found on https://www.everythingfrontend.com/posts/insert-text-into-textarea-at-cursor-position.html 🎈
-	field.setRangeText(
-		text,
-		field.selectionStart || 0,
-		field.selectionEnd || 0,
-		'end', // Without this, the cursor is either at the beginning or `text` remains selected
-	);
-
-	field.dispatchEvent(
-		new InputEvent('input', {
-			data: text,
-			inputType: 'insertText',
-		}),
-	);
-}
-
 /** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
 export function insert(
 	field: HTMLTextAreaElement | HTMLInputElement,
@@ -38,8 +9,11 @@ export function insert(
 		field.focus();
 	}
 
-	if (!safeTextInsert(text)) {
-		insertTextFirefox(field, text);
+	if (text === '') {
+		// https://github.com/fregante/text-field-edit/issues/16
+		document.execCommand('delete');
+	} else {
+		document.execCommand('insertText', false, text);
 	}
 
 	if (initialFocus === document.body) {
