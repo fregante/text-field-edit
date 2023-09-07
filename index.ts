@@ -63,12 +63,12 @@ export function replace(
 	replacer: string | ReplacerCallback,
 	cursor: 'select' | 'after-replacement' = 'select',
 ): void {
-	/** Remembers how much each match offset should be adjusted */
+	/** Keeps track of how much each match offset should be adjusted */
 	let drift = 0;
 
 	field.value.replace(searchValue, (...args): string => {
 		// Select current match to replace it later
-		const matchStart = drift + (args[args.length - 2] as number);
+		const matchStart = drift + (args.at(-2) as number);
 		const matchLength = args[0].length;
 		field.selectionStart = matchStart;
 		field.selectionEnd = matchStart + matchLength;
