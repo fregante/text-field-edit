@@ -13,8 +13,8 @@ export function insert(
 		// https://github.com/fregante/text-field-edit/issues/16
 		document.execCommand('delete');
 	} else {
-                document.execCommand('insertText', false, text);
-        }
+		document.execCommand('insertText', false, text);
+	}
 
 	if (initialFocus === document.body) {
 		field.blur();
