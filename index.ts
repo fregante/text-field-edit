@@ -68,7 +68,7 @@ export function replace(
 
 	field.value.replace(searchValue, (...args): string => {
 		// Select current match to replace it later
-		const matchStart = drift + (args[args.length - 2] as number);
+		const matchStart = drift + (args.at(-2) as number);
 		const matchLength = args[0].length;
 		field.selectionStart = matchStart;
 		field.selectionEnd = matchStart + matchLength;

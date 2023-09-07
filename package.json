@@ -25,8 +25,9 @@
 	"author": "Federico Brigante <me@fregante.com> (https://fregante.com)",
 	"sideEffects": false,
 	"type": "module",
-	"main": "index.js",
-	"module": "index.js",
+	"exports": "./index.js",
+	"main": "./index.js",
+	"types": "./index.d.ts",
 	"files": [
 		"index.js",
 		"index.d.ts"
@@ -51,13 +52,16 @@
 		}
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^3.0.1",
+		"@sindresorhus/tsconfig": "^4.0.0",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
 		"npm-run-all": "^4.1.5",
-		"tape": "^5.6.1",
+		"tape": "^5.6.6",
 		"tape-run": "^10.0.0",
-		"typescript": "^4.9.3",
-		"xo": "^0.53.0"
+		"typescript": "^5.2.2",
+		"xo": "^0.56.0"
+	},
+	"engines": {
+		"node": ">=18"
 	}
 }
