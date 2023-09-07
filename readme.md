@@ -34,7 +34,7 @@ import {
 	insertTextIntoField,
 	setFieldText,
 	getFieldSelection,
-	wrapSelectionInField,
+	wrapFieldSelection,
 	replaceFieldText,
 } from 'text-field-edit';
 ```

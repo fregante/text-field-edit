@@ -40,7 +40,7 @@ export function getFieldSelection(
 }
 
 /** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
-export function wrapSelectionInField(
+export function wrapFieldSelection(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	wrap: string,
 	wrapEnd?: string,
@@ -95,14 +95,18 @@ export const set = setFieldText;
 /** @deprecated Import `replaceFieldText` instead */
 export const replace = replaceFieldText;
 
-/** @deprecated Import `wrapSelectionInField` instead */
-export const wrap = wrapSelectionInField;
+/** @deprecated Import `wrapFieldSelection` instead */
+export const wrapSelection = wrapFieldSelection;
+
+/** @deprecated Import `getFieldSelection` instead */
+export const getSelection = getFieldSelection;
 
 // Note: Don't reuse deprecated constant from above
 const textFieldEdit = {
 	insert: insertTextIntoField,
 	set: setFieldText,
 	replace: replaceFieldText,
-	wrap: wrapSelectionInField,
+	wrapSelection: wrapFieldSelection,
+	getSelection: getFieldSelection,
 } as const;
 export default textFieldEdit;
