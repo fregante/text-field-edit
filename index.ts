@@ -1,5 +1,5 @@
 /** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
-export function insertTextInField(
+export function insertTextIntoField(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	text: string,
 ): void {
@@ -29,7 +29,7 @@ export function setFieldText(
 	text: string,
 ): void {
 	field.select();
-	insertTextInField(field, text);
+	insertTextIntoField(field, text);
 }
 
 /** Get the selected text in a field or an empty string if nothing is selected. */
@@ -47,7 +47,7 @@ export function wrapSelectionInField(
 ): void {
 	const {selectionStart, selectionEnd} = field;
 	const selection = getFieldSelection(field);
-	insertTextInField(field, wrap + selection + (wrapEnd ?? wrap));
+	insertTextIntoField(field, wrap + selection + (wrapEnd ?? wrap));
 
 	// Restore the selection around the previously-selected text
 	field.selectionStart = selectionStart! + wrap.length;
@@ -74,7 +74,7 @@ export function replaceFieldText(
 		field.selectionEnd = matchStart + matchLength;
 
 		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
-		insertTextInField(field, replacement);
+		insertTextIntoField(field, replacement);
 
 		if (cursor === 'select') {
 			// Select replacement. Without this, the cursor would be after the replacement
@@ -86,8 +86,8 @@ export function replaceFieldText(
 	});
 }
 
-/** @deprecated Import `insertTextInField` instead */
-export const insert = insertTextInField;
+/** @deprecated Import `insertTextIntoField` instead */
+export const insert = insertTextIntoField;
 
 /** @deprecated Import `setFieldText` instead */
 export const set = setFieldText;
@@ -100,7 +100,7 @@ export const wrap = wrapSelectionInField;
 
 // Note: Don't reuse deprecated constant from above
 const textFieldEdit = {
-	insert: insertTextInField,
+	insert: insertTextIntoField,
 	set: setFieldText,
 	replace: replaceFieldText,
 	wrap: wrapSelectionInField,

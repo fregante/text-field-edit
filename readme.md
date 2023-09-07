@@ -31,7 +31,7 @@ import textFieldEdit from 'text-field-edit';
 
 // Alternatively only import the specific methods
 import {
-	insertTextInField,
+	insertTextIntoField,
 	setFieldText,
 	getFieldSelection,
 	wrapSelectionInField,
