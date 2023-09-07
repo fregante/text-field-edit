@@ -1,6 +1,6 @@
 {
 	"name": "text-field-edit",
-	"version": "3.2.0",
+	"version": "4.0.0",
 	"description": "Insert text in a `<textarea>` and `<input>` (including Undo in most browsers)",
 	"keywords": [
 		"at cursor",
