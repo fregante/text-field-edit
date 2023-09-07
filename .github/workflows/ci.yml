@@ -8,21 +8,21 @@ jobs:
   Types:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
 
   Lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: npx xo
 
   Firefox:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
       - run: xvfb-run npm run test:gecko
@@ -30,7 +30,7 @@ jobs:
   Chrome:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - run: npm ci
       - run: tsc
       - run: xvfb-run npm run test:blink
