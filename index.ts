@@ -12,9 +12,9 @@ export function insert(
 	if (text === '') {
 		// https://github.com/fregante/text-field-edit/issues/16
 		document.execCommand('delete');
-	}
-
-	document.execCommand('insertText', false, text);
+	} else {
+                document.execCommand('insertText', false, text);
+        }
 
 	if (initialFocus === document.body) {
 		field.blur();
