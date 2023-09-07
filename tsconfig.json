@@ -1,5 +1,12 @@
 {
 	"extends": "@sindresorhus/tsconfig",
+	"compilerOptions": {
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ES2022"
+		]
+	},
 	"files": [
 		"index.ts"
 	]

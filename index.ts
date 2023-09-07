@@ -63,7 +63,7 @@ export function replace(
 	replacer: string | ReplacerCallback,
 	cursor: 'select' | 'after-replacement' = 'select',
 ): void {
-	/** Remembers how much each match offset should be adjusted */
+	/** Keeps track of how much each match offset should be adjusted */
 	let drift = 0;
 
 	field.value.replace(searchValue, (...args): string => {
