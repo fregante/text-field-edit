@@ -27,8 +27,16 @@ npm install text-field-edit
 ```
 
 ```js
-// This module is only offered as a ES Module
-import * as textFieldEdit from 'text-field-edit';
+import textFieldEdit from 'text-field-edit';
+
+// Alternatively only import the specific methods
+import {
+	insertTextInField,
+	setFieldText,
+	getFieldSelection,
+	wrapSelectionInField,
+	replaceFieldText,
+} from 'text-field-edit';
 ```
 
 ## Usage
@@ -160,4 +168,4 @@ Type: `HTMLTextAreaElement | HTMLInputElement`
 
 - [indent-textarea](https://github.com/fregante/indent-textarea) - Add editor-like tab-to-indent functionality to `<textarea>`, in a few bytes. Uses this module.
 - [fit-textarea](https://github.com/fregante/fit-textarea) - Automatically expand a `<textarea>` to fit its content, in a few bytes.
-- [Refined GitHub](https://github.com/sindresorhus/refined-github) - Uses this module.
+- [Refined GitHub](https://github.com/refined-github/refined-github) - Uses this module.
