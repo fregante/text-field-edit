@@ -36,8 +36,8 @@
 		"build": "tsc",
 		"prepack": "tsc --sourceMap false",
 		"test": "npm-run-all --silent build --parallel test:*",
-		"test:blink": "bun build test.js | tape-run --browser chrome",
-		"test:gecko": "bun build test.js | tape-run --browser firefox",
+		"test:blink": "bun build test.js | sed 's/import.meta/{}/' | tape-run --browser chrome",
+		"test:gecko": "bun build test.js | sed 's/import.meta/{}/' | tape-run --browser firefox",
 		"test:lint": "xo",
 		"watch": "tsc --watch"
 	},
