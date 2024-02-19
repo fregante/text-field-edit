@@ -4,7 +4,7 @@ function isNativeField(field: HTMLElement): field is HTMLInputElement | HTMLText
 
 /** Call a function after focusing a field and then restore the previous focus afterwards if necessary */
 function withFocus<T>(field: HTMLElement, callback: () => T): T {
-	const document = field.ownerDocument!;
+	const document = field.ownerDocument;
 	const initialFocus = document.activeElement;
 	if (initialFocus !== field) {
 		field.focus();
@@ -26,7 +26,7 @@ export function insertTextIntoField(
 	field: HTMLElement,
 	text: string,
 ): void {
-	const document = field.ownerDocument!;
+	const document = field.ownerDocument;
 	withFocus(field, () => {
 		if (text === '') {
 			// https://github.com/fregante/text-field-edit/issues/16
@@ -61,7 +61,7 @@ export function getFieldSelection(
 		return field.value.slice(field.selectionStart!, field.selectionEnd!);
 	}
 
-	const selection = field.ownerDocument!.getSelection()!;
+	const selection = field.ownerDocument.getSelection()!;
 	if (selection && field.contains(selection.anchorNode)) {
 		// The selection is inside the field
 		return selection.toString();
@@ -70,8 +70,7 @@ export function getFieldSelection(
 	return '';
 }
 
-
-function wrapFieldSelectionNative (
+function wrapFieldSelectionNative(
 	field: HTMLInputElement | HTMLTextAreaElement,
 	wrap: string,
 	wrapEnd?: string,
@@ -96,7 +95,7 @@ export function wrapFieldSelection(
 		return;
 	}
 
-	const document = field.ownerDocument!;
+	const document = field.ownerDocument;
 	const selection = document.getSelection()!;
 	const selectionRange = selection.getRangeAt(0);
 
@@ -112,7 +111,7 @@ export function wrapFieldSelection(
 		startCursor.insertNode(document.createTextNode(wrap));
 	}
 
-	if (wrapEnd || wrap) {
+	if (wrapEnd ?? wrap) {
 		// Restore selection
 		selection.removeAllRanges();
 		selection.addRange(selectionRange);
@@ -129,7 +128,7 @@ export function replaceFieldText(
 	cursor: 'select' | 'after-replacement' = 'select',
 ): void {
 	if (!isNativeField(field)) {
-		throw new TypeError('replaceFieldText only supports input and textarea fields')
+		throw new TypeError('replaceFieldText only supports input and textarea fields');
 	}
 
 	/** Keeps track of how much each match offset should be adjusted */
