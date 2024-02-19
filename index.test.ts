@@ -1,10 +1,12 @@
 import test from 'tape';
+import {getSmartIndexRange} from './index.test-utils.js';
 import {
 	insertTextIntoField,
 	setFieldText,
 	replaceFieldText,
 	wrapFieldSelection,
 	getFieldSelection,
+	_TEST_ONLY_withFocus,
 } from './index.js';
 
 type NativeField = HTMLTextAreaElement | HTMLInputElement;
@@ -13,10 +15,12 @@ function isNativeField(field: HTMLElement): field is NativeField {
 	return field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement;
 }
 
-function getField(type: 'contenteditable', state?: string): HTMLElement;
 function getField(type: 'textarea' | 'input', state?: string): NativeField;
+function getField(type: string, state?: string): HTMLElement;
 function getField(type: string, state = '|') {
-	const field = document.createElement(type);
+	const field = document.createElement(type === 'contenteditable' ? 'div' : type);
+	document.body.append(field);
+
 	if (type === 'contenteditable') {
 		field.setAttribute('contenteditable', 'true');
 	}
@@ -30,25 +34,34 @@ function getField(type: string, state = '|') {
 		field.selectionStart = selectionStart;
 		field.selectionEnd = selectionEnd;
 	} else {
-		field.textContent = value;
-		const range = document.createRange();
-		range.setStart(field.firstChild!, selectionStart);
-		range.setEnd(field.firstChild!, selectionEnd);
-		const selection = window.getSelection()!;
-		selection.removeAllRanges();
-		selection.addRange(range);
+		field.append(value);
+
+		// This changes the focus of the whole document, so make sure to reset it afterwards to avoid side effects while testing
+		_TEST_ONLY_withFocus(field, () => {
+			const selection = window.getSelection()!;
+			selection.removeAllRanges();
+			selection.addRange(getSmartIndexRange(field, selectionStart, selectionEnd));
+		});
 	}
 
-	document.body.append(field);
 	return field;
 }
 
-function getState(field: HTMLElement) {
-	const {value, selectionStart, selectionEnd} = isNativeField(field) ? field : {
+function getSimplifiedFieldState(field: HTMLElement) {
+	if (isNativeField(field)) {
+		return field;
+	}
+
+	const selection = getSelection()!;
+	return {
 		value: field.textContent!,
-		selectionStart: 0,
-		selectionEnd: 0,
+		selectionStart: selection.anchorOffset,
+		selectionEnd: selection.anchorOffset + selection.toString().length,
 	};
+}
+
+function getState(field: HTMLElement) {
+	const {value, selectionStart, selectionEnd} = getSimplifiedFieldState(field);
 	if (selectionStart === selectionEnd) {
 		return value.slice(0, selectionStart!) + '|' + value.slice(selectionStart!);
 	}
@@ -62,8 +75,8 @@ function getState(field: HTMLElement) {
 	);
 }
 
-for (const type of ['textarea', 'input'] as const) {
-	test(`${type}: test harness test`, t => {
+for (const type of ['textarea', 'input', 'contenteditable'] as const) {
+	test(`${type}: harness test`, t => {
 		t.equal(getState(getField(type)), '|');
 		t.equal(getState(getField(type, '|')), '|');
 		t.equal(getState(getField(type, 'A|')), 'A|');
@@ -172,6 +185,10 @@ for (const type of ['textarea', 'input'] as const) {
 		t.equal(getState(field), 'O[|]A');
 		t.end();
 	});
+
+	if (type === 'contenteditable') {
+		continue;
+	}
 
 	test(`${type}: replace() supports strings`, t => {
 		const field = getField(type, 'ABACUS');

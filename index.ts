@@ -186,3 +186,5 @@ const textFieldEdit = {
 	getSelection: getFieldSelection,
 } as const;
 export default textFieldEdit;
+
+export {withFocus as _TEST_ONLY_withFocus};
