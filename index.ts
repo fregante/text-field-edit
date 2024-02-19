@@ -54,7 +54,7 @@ export function wrapFieldSelection(
 	field.selectionEnd = selectionEnd! + wrap.length;
 }
 
-type ReplacerCallback = (substring: string, ...args: any[]) => string;
+type ReplacerCallback = (substring: string, ...arguments_: any[]) => string;
 
 /** Finds and replaces strings and regex in the field’s value, like `field.value = field.value.replace()` but better */
 export function replaceFieldText(
@@ -66,14 +66,14 @@ export function replaceFieldText(
 	/** Keeps track of how much each match offset should be adjusted */
 	let drift = 0;
 
-	field.value.replace(searchValue, (...args): string => {
+	field.value.replace(searchValue, (...arguments_): string => {
 		// Select current match to replace it later
-		const matchStart = drift + (args.at(-2) as number);
-		const matchLength = args[0].length;
+		const matchStart = drift + (arguments_.at(-2) as number);
+		const matchLength = arguments_[0].length;
 		field.selectionStart = matchStart;
 		field.selectionEnd = matchStart + matchLength;
 
-		const replacement = typeof replacer === 'string' ? replacer : replacer(...args);
+		const replacement = typeof replacer === 'string' ? replacer : replacer(...arguments_);
 		insertTextIntoField(field, replacement);
 
 		if (cursor === 'select') {

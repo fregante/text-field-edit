@@ -52,14 +52,14 @@
 		}
 	},
 	"devDependencies": {
-		"@sindresorhus/tsconfig": "^4.0.0",
+		"@sindresorhus/tsconfig": "^5.0.0",
 		"browserify": "^17.0.0",
 		"esmify": "^2.1.1",
 		"npm-run-all": "^4.1.5",
-		"tape": "^5.6.6",
-		"tape-run": "^10.0.0",
-		"typescript": "^5.2.2",
-		"xo": "^0.56.0"
+		"tape": "^5.7.5",
+		"tape-run": "^11.0.0",
+		"typescript": "^5.3.3",
+		"xo": "^0.57.0"
 	},
 	"engines": {
 		"node": ">=18"
