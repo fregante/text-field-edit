@@ -1,29 +1,37 @@
 import test from 'tape';
 import textFieldEdit from './index.js';
 
+type NativeField = HTMLTextAreaElement | HTMLInputElement;
+
 function getField(state = '|', type = 'textarea') {
 	const field = document.createElement(type);
 	const cursor = state.indexOf('|');
-	const selectionStart = state.indexOf('{');
-	const selectionEnd = state.indexOf('}') - 1;
-	field.value = state.replaceAll(/[{|}]/g, '');
-	field.selectionStart = cursor >= 0 ? cursor : selectionStart;
-	field.selectionEnd = cursor >= 0 ? cursor : selectionEnd;
+	const value = state.replaceAll(/[{|}]/g, '');
+	const selectionStart = cursor >= 0 ? cursor : state.indexOf('{');
+	const selectionEnd = cursor >= 0 ? cursor : state.indexOf('}') - 1;
+	if (field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement) {
+		field.value = value;
+		field.selectionStart = selectionStart;
+		field.selectionEnd = selectionEnd;
+	} else {
+		throw new Error("Not implemented for this type of field.");
+	}
+
 	document.body.append(field);
 	return field;
 }
 
-function getState({value, selectionStart, selectionEnd}) {
+function getState({value, selectionStart, selectionEnd}: NativeField) {
 	if (selectionStart === selectionEnd) {
-		return value.slice(0, selectionStart) + '|' + value.slice(selectionStart);
+		return value.slice(0, selectionStart!) + '|' + value.slice(selectionStart!);
 	}
 
 	return (
-		value.slice(0, selectionStart)
+		value.slice(0, selectionStart!)
 		+ '{'
-		+ value.slice(selectionStart, selectionEnd)
+		+ value.slice(selectionStart!, selectionEnd!)
 		+ '}'
-		+ value.slice(selectionEnd)
+		+ value.slice(selectionEnd!)
 	);
 }
 
