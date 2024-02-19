@@ -84,17 +84,11 @@ function wrapFieldSelectionNative(
 	field.selectionEnd = selectionEnd! + wrap.length;
 }
 
-/** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
-export function wrapFieldSelection(
+function wrapFieldSelectionContentEditable(
 	field: HTMLElement,
 	wrap: string,
 	wrapEnd?: string,
-): void {
-	if (isNativeField(field)) {
-		wrapFieldSelectionNative(field, wrap, wrapEnd);
-		return;
-	}
-
+) {
 	const document = field.ownerDocument;
 	const selection = document.getSelection()!;
 	const selectionRange = selection.getRangeAt(0);
@@ -115,6 +109,19 @@ export function wrapFieldSelection(
 		// Restore selection
 		selection.removeAllRanges();
 		selection.addRange(selectionRange);
+	}
+}
+
+/** Adds the `wrappingText` before and after field’s selection (or cursor). If `endWrappingText` is provided, it will be used instead of `wrappingText` at on the right. */
+export function wrapFieldSelection(
+	field: HTMLElement,
+	wrap: string,
+	wrapEnd?: string,
+): void {
+	if (isNativeField(field)) {
+		wrapFieldSelectionNative(field, wrap, wrapEnd);
+	} else {
+		wrapFieldSelectionContentEditable(field, wrap, wrapEnd);
 	}
 }
 
