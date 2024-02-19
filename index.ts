@@ -22,19 +22,27 @@ function withFocus<T>(field: HTMLElement, callback: () => T): T {
 	}
 }
 
+// This will insert into the focused field. It shouild always be called inside withFocus.
+// Use this one locally if there are multiple `insertTextIntoField` or `document.execCommand` calls
+function insertTextWhereverTheFocusIs(
+	document: Document,
+	text: string,
+): void {
+	if (text === '') {
+		// https://github.com/fregante/text-field-edit/issues/16
+		document.execCommand('delete');
+	} else {
+		document.execCommand('insertText', false, text);
+	}
+}
+
 /** Inserts `text` at the cursor’s position, replacing any selection, with **undo** support and by firing the `input` event. */
 export function insertTextIntoField(
 	field: HTMLElement,
 	text: string,
 ): void {
-	const document = field.ownerDocument;
 	withFocus(field, () => {
-		if (text === '') {
-			// https://github.com/fregante/text-field-edit/issues/16
-			document.execCommand('delete');
-		} else {
-			document.execCommand('insertText', false, text);
-		}
+		insertTextWhereverTheFocusIs(field.ownerDocument, text);
 	});
 }
 
@@ -45,13 +53,14 @@ export function setFieldText(
 ): void {
 	if (isNativeField(field)) {
 		field.select();
+		insertTextIntoField(field, text);
 	} else {
+		const document = field.ownerDocument;
 		withFocus(field, () => {
 			document.execCommand('selectAll', false, text);
+			insertTextWhereverTheFocusIs(document, text);
 		});
 	}
-
-	insertTextIntoField(field, text);
 }
 
 /** Get the selected text in a field or an empty string if nothing is selected. */
@@ -148,23 +157,25 @@ export function replaceFieldText(
 	/** Keeps track of how much each match offset should be adjusted */
 	let drift = 0;
 
-	field.value.replace(searchValue, (...arguments_): string => {
-		// Select current match to replace it later
-		const matchStart = drift + (arguments_.at(-2) as number);
-		const matchLength = arguments_[0].length;
-		field.selectionStart = matchStart;
-		field.selectionEnd = matchStart + matchLength;
-
-		const replacement = typeof replacer === 'string' ? replacer : replacer(...arguments_);
-		insertTextIntoField(field, replacement);
-
-		if (cursor === 'select') {
-			// Select replacement. Without this, the cursor would be after the replacement
+	withFocus(field, () => {
+		field.value.replace(searchValue, (...arguments_): string => {
+			// Select current match to replace it later
+			const matchStart = drift + (arguments_.at(-2) as number);
+			const matchLength = arguments_[0].length;
 			field.selectionStart = matchStart;
-		}
+			field.selectionEnd = matchStart + matchLength;
 
-		drift += replacement.length - matchLength;
-		return replacement;
+			const replacement = typeof replacer === 'string' ? replacer : replacer(...arguments_);
+			insertTextWhereverTheFocusIs(field.ownerDocument, replacement);
+
+			if (cursor === 'select') {
+				// Select replacement. Without this, the cursor would be after the replacement
+				field.selectionStart = matchStart;
+			}
+
+			drift += replacement.length - matchLength;
+			return replacement;
+		});
 	});
 }
 
