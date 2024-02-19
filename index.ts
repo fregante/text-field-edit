@@ -86,15 +86,15 @@ export function getFieldSelection(
 function wrapFieldSelectionNative(
 	field: HTMLInputElement | HTMLTextAreaElement,
 	wrap: string,
-	wrapEnd?: string,
+	wrapEnd: string,
 ): void {
 	const {selectionStart, selectionEnd} = field;
 	const selection = getFieldSelection(field);
-	insertTextIntoField(field, wrap + selection + (wrapEnd ?? wrap));
+	insertTextIntoField(field, wrap + selection + wrapEnd);
 
 	// Restore the selection around the previously-selected text
 	field.selectionStart = selectionStart! + wrap.length;
-	field.selectionEnd = selectionEnd! + wrap.length;
+	field.selectionEnd = selectionEnd! + wrapEnd.length;
 }
 
 function collapseCursor(selection: Selection, range: Range, toStart: boolean) {
@@ -108,15 +108,15 @@ function collapseCursor(selection: Selection, range: Range, toStart: boolean) {
 function wrapFieldSelectionContentEditable(
 	field: HTMLElement,
 	wrap: string,
-	wrapEnd?: string,
+	wrapEnd: string,
 ) {
 	const document = field.ownerDocument;
 	const selection = document.getSelection()!;
 	const selectionRange = selection.getRangeAt(0);
 
-	if (wrapEnd ?? wrap) {
+	if (wrapEnd) {
 		collapseCursor(selection, selectionRange, false);
-		insertTextIntoField(field, wrapEnd ?? wrap);
+		insertTextIntoField(field, wrapEnd);
 	}
 
 	if (wrap) {
@@ -135,7 +135,7 @@ function wrapFieldSelectionContentEditable(
 export function wrapFieldSelection(
 	field: HTMLElement,
 	wrap: string,
-	wrapEnd?: string,
+	wrapEnd = wrap,
 ): void {
 	if (isNativeField(field)) {
 		wrapFieldSelectionNative(field, wrap, wrapEnd);
