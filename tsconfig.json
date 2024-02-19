@@ -8,6 +8,7 @@
 		]
 	},
 	"files": [
-		"index.ts"
+		"index.ts",
+		"index.test.ts"
 	]
 }
