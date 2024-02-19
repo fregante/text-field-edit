@@ -3,7 +3,7 @@ export function insertTextIntoField(
 	field: HTMLTextAreaElement | HTMLInputElement,
 	text: string,
 ): void {
-	const document = field.ownerDocument!;
+	const document = field.ownerDocument;
 	const initialFocus = document.activeElement;
 	if (initialFocus !== field) {
 		field.focus();
