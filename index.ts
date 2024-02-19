@@ -85,6 +85,14 @@ function wrapFieldSelectionNative(
 	field.selectionEnd = selectionEnd! + wrap.length;
 }
 
+function collapseCursor(selection: Selection, range: Range, toStart: boolean) {
+	const alteredRange = range.cloneRange();
+	alteredRange.collapse(toStart);
+
+	selection.removeAllRanges();
+	selection.addRange(alteredRange);
+}
+
 function wrapFieldSelectionContentEditable(
 	field: HTMLElement,
 	wrap: string,
@@ -95,15 +103,13 @@ function wrapFieldSelectionContentEditable(
 	const selectionRange = selection.getRangeAt(0);
 
 	if (wrapEnd ?? wrap) {
-		const endCursor = selectionRange.cloneRange();
-		endCursor.collapse(false);
-		endCursor.insertNode(document.createTextNode(wrapEnd ?? wrap));
+		collapseCursor(selection, selectionRange, false);
+		insertTextIntoField(field, wrapEnd ?? wrap);
 	}
 
 	if (wrap) {
-		const startCursor = selectionRange.cloneRange();
-		startCursor.collapse(true);
-		startCursor.insertNode(document.createTextNode(wrap));
+		collapseCursor(selection, selectionRange, true);
+		insertTextIntoField(field, wrap);
 	}
 
 	if (wrapEnd ?? wrap) {
