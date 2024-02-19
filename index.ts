@@ -1,3 +1,6 @@
+// Make sure that the global document is never used
+declare const document: never;
+
 function isNativeField(field: HTMLElement): field is HTMLInputElement | HTMLTextAreaElement {
 	return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement;
 }
