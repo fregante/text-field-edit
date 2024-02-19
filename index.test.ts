@@ -76,7 +76,11 @@ function getState(field: HTMLElement) {
 }
 
 for (const type of ['textarea', 'input', 'contenteditable'] as const) {
-	test(`${type}: harness test`, t => {
+	test(`${type}: harness test`, async t => {
+		// Reset the document focus
+		(document.activeElement as HTMLElement)?.blur?.();
+		document.body.focus();
+
 		t.equal(getState(getField(type)), '|');
 		t.equal(getState(getField(type, '|')), '|');
 		t.equal(getState(getField(type, 'A|')), 'A|');

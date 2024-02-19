@@ -15,8 +15,8 @@ function withFocus<T>(field: HTMLElement, callback: () => T): T {
 		field.focus();
 		return callback();
 	} finally {
+		field.blur(); // Supports `intialFocus === body`
 		if (initialFocus instanceof HTMLElement) {
-			field.blur(); // Supports `intialFocus === body`
 			initialFocus.focus();
 		}
 	}
