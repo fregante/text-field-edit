@@ -6,16 +6,17 @@ function isNativeField(field: HTMLElement): field is HTMLInputElement | HTMLText
 function withFocus<T>(field: HTMLElement, callback: () => T): T {
 	const document = field.ownerDocument;
 	const initialFocus = document.activeElement;
-	if (initialFocus !== field) {
-		field.focus();
+
+	if (initialFocus === field) {
+		return callback();
 	}
 
 	try {
+		field.focus();
 		return callback();
 	} finally {
-		if (initialFocus === document.body) {
-			field.blur();
-		} else if (initialFocus instanceof HTMLElement && initialFocus !== field) {
+		if (initialFocus instanceof HTMLElement) {
+			field.blur(); // Supports `intialFocus === body`
 			initialFocus.focus();
 		}
 	}
