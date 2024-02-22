@@ -1,22 +1,4 @@
-/*
- * `index` means the character-index of a node relative to its main element,
- * regardless of other HTML elements in between.
- * Example: "Hello <i>World<b>!</b></i>"
- * The tag `b` and the exclamation mark are at index 11
- */
-export function getIndex(container: Node & ParentNode, target: Node): number {
-	let index = 0;
-	do {
-		while (target.previousSibling) {
-			index += target.previousSibling.textContent!.length;
-			target = target.previousSibling;
-		}
-
-		target = target.parentElement!;
-	} while (target && target !== container);
-
-	return index;
-}
+// Extracted from: https://github.com/fregante/zip-text-nodes
 
 // Get text node at an character index of an Element.
 // Only needed because .setStart only accepts a character index relative to a single TextNode
