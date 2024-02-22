@@ -39,7 +39,7 @@
 		"test:blink": "browserify -p esmify index.test.js | tape-run --browser chrome",
 		"test:gecko": "browserify -p esmify index.test.js | tape-run --browser firefox",
 		"test:lint": "xo",
-		"watch": "tsc --watch"
+		"watch": "tsc --watch --noEmitOnError false"
 	},
 	"xo": {
 		"envs": [
