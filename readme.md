@@ -5,16 +5,16 @@
 
 <img align="right" width="360" src="https://user-images.githubusercontent.com/1402241/55075820-e3645800-50ce-11e9-8591-9195c3cdfc8a.gif">
 
-> Insert text in a `<textarea>` and `<input>` (including Undo in most browsers)
+> Insert text in a `<textarea>`, `<input>` and `contenteditable` (including Undo support)
 
 You should use this instead of setting the `field.value` directly because:
 
-- it doesn't break the undo history (in Chrome, Firefox, and Safari)
+- it doesn't break the undo history
 - it fires an `input` event (with `event.inputType === 'insertText'`)
 - it's the most efficient way of adding/replacing selected text in a field
 - it's cross-browser (modern browsers)
 
-It uses `document.execCommand('insertText')` under the hood. [Firefox added support for Undo](https://bugzilla.mozilla.org/show_bug.cgi?id=1220696) in Firefox 89 (June 2021). If you need IE support, use [insert-text-at-cursor](https://github.com/grassator/insert-text-at-cursor).
+It uses `document.execCommand('insertText')` under the hood and it automatically focuses/blurs the field you pass.
 
 ## Install
 
@@ -75,7 +75,7 @@ textFieldEdit.insert(field, '🥳');
 
 #### field
 
-Type: `HTMLTextAreaElement | HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement` or any `contenteditable` element
 
 #### text
 
@@ -94,7 +94,7 @@ textFieldEdit.set(textarea, 'New text!');
 
 #### field
 
-Type: `HTMLTextAreaElement | HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement` or any `contenteditable` element
 
 #### text
 
@@ -117,7 +117,7 @@ textFieldEdit.replace(textarea, 'Hello', 'Ciao');
 
 #### field
 
-Type: `HTMLTextAreaElement | HTMLInputElement`
+Type: `HTMLTextAreaElement | HTMLInputElement` (not available on `contenteditable`)
 
 #### searchValue
 
@@ -148,6 +148,22 @@ const field = document.querySelector('textarea');
 textFieldEdit.wrapSelection(field, '(', ')');
 // Changes the field's value from '|almost| cool' to '(|almost|) cool' (where | marks the selected text)
 ```
+
+#### field
+
+Type: `HTMLTextAreaElement | HTMLInputElement` or any `contenteditable` elements
+
+#### wrappingText
+
+Type: `string`
+
+The string to prepend to the selection.
+
+#### endWrappingText
+
+Type: `string`
+
+The string to append to the selection. If not provided, `wrappingText` will be used.
 
 ### textFieldEdit.getSelection(field)
 
