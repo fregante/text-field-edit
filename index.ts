@@ -122,6 +122,13 @@ function wrapFieldSelectionContentEditable(
 	if (before) {
 		collapseCursor(selection, selectionRange, true);
 		insertTextIntoField(field, before);
+
+		// The text added by at the beginning is included in the new selection, while wrapEnd isn't.
+		// This nudges the selection after the newly-inserted text.
+		selectionRange.setStart(
+			selectionRange.startContainer,
+			selectionRange.startOffset + before.length,
+		);
 	}
 
 	if (after ?? before) {
