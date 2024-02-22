@@ -1,5 +1,5 @@
 import test from 'tape';
-import {getSmartIndexRange} from './index.test-utils.js';
+import {getField, getState} from './index.test-utils.js';
 import {
 	insertTextIntoField,
 	setFieldText,
@@ -8,72 +8,6 @@ import {
 	getFieldSelection,
 	_TEST_ONLY_withFocus,
 } from './index.js';
-
-type NativeField = HTMLTextAreaElement | HTMLInputElement;
-
-function isNativeField(field: HTMLElement): field is NativeField {
-	return field instanceof HTMLTextAreaElement || field instanceof HTMLInputElement;
-}
-
-function getField(type: 'textarea' | 'input', state?: string): NativeField;
-function getField(type: string, state?: string): HTMLElement;
-function getField(type: string, state = '|') {
-	const field = document.createElement(type === 'contenteditable' ? 'div' : type);
-	document.body.append(field);
-
-	if (type === 'contenteditable') {
-		field.setAttribute('contenteditable', 'true');
-	}
-
-	const cursor = state.indexOf('|');
-	const value = state.replaceAll(/[{|}]/g, '');
-	const selectionStart = cursor >= 0 ? cursor : state.indexOf('{');
-	const selectionEnd = cursor >= 0 ? cursor : state.indexOf('}') - 1;
-	if (isNativeField(field)) {
-		field.value = value;
-		field.selectionStart = selectionStart;
-		field.selectionEnd = selectionEnd;
-	} else {
-		field.append(value);
-
-		// This changes the focus of the whole document, so make sure to reset it afterwards to avoid side effects while testing
-		_TEST_ONLY_withFocus(field, () => {
-			const selection = window.getSelection()!;
-			selection.removeAllRanges();
-			selection.addRange(getSmartIndexRange(field, selectionStart, selectionEnd));
-		});
-	}
-
-	return field;
-}
-
-function getSimplifiedFieldState(field: HTMLElement) {
-	if (isNativeField(field)) {
-		return field;
-	}
-
-	const selection = getSelection()!;
-	return {
-		value: field.textContent!,
-		selectionStart: selection.anchorOffset,
-		selectionEnd: selection.anchorOffset + selection.toString().length,
-	};
-}
-
-function getState(field: HTMLElement) {
-	const {value, selectionStart, selectionEnd} = getSimplifiedFieldState(field);
-	if (selectionStart === selectionEnd) {
-		return value.slice(0, selectionStart!) + '|' + value.slice(selectionStart!);
-	}
-
-	return (
-		value.slice(0, selectionStart!)
-		+ '{'
-		+ value.slice(selectionStart!, selectionEnd!)
-		+ '}'
-		+ value.slice(selectionEnd!)
-	);
-}
 
 for (const type of ['textarea', 'input', 'contenteditable'] as const) {
 	test(`${type}: harness test`, async t => {
