@@ -107,24 +107,24 @@ function collapseCursor(selection: Selection, range: Range, toStart: boolean) {
 
 function wrapFieldSelectionContentEditable(
 	field: HTMLElement,
-	wrap: string,
-	wrapEnd: string,
+	before: string,
+	after: string,
 ) {
 	const document = field.ownerDocument;
 	const selection = document.getSelection()!;
 	const selectionRange = selection.getRangeAt(0);
 
-	if (wrapEnd) {
+	if (after) {
 		collapseCursor(selection, selectionRange, false);
-		insertTextIntoField(field, wrapEnd);
+		insertTextIntoField(field, after);
 	}
 
-	if (wrap) {
+	if (before) {
 		collapseCursor(selection, selectionRange, true);
-		insertTextIntoField(field, wrap);
+		insertTextIntoField(field, before);
 	}
 
-	if (wrapEnd ?? wrap) {
+	if (after ?? before) {
 		// Restore selection
 		selection.removeAllRanges();
 		selection.addRange(selectionRange);
@@ -135,6 +135,7 @@ function wrapFieldSelectionContentEditable(
 export function wrapFieldSelection(
 	field: HTMLElement,
 	wrap: string,
+	// TODO: Ensure that it works regardless of direction
 	wrapEnd = wrap,
 ): void {
 	if (isNativeField(field)) {
