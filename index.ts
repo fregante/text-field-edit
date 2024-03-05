@@ -94,7 +94,7 @@ function wrapFieldSelectionNative(
 
 	// Restore the selection around the previously-selected text
 	field.selectionStart = selectionStart! + wrap.length;
-	field.selectionEnd = selectionEnd! + wrapEnd.length;
+	field.selectionEnd = selectionEnd! + wrap.length;
 }
 
 function collapseCursor(selection: Selection, range: Range, toStart: boolean) {
