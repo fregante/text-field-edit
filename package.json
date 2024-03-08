@@ -1,6 +1,6 @@
 {
 	"name": "text-field-edit",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"description": "Insert text in a `<textarea>`, `<input>` and `contenteditable` elements (including Undo support)",
 	"keywords": [
 		"at cursor",
