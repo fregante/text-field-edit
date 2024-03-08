@@ -121,6 +121,8 @@ for (const type of ['textarea', 'input', 'contenteditable'] as const) {
 		const field = getField(type, 'W{O}A');
 		wrapFieldSelection(field, '[', ']');
 		t.equal(getState(field), 'W[{O}]A');
+		wrapFieldSelection(field, '<p>', '</p>');
+		t.equal(getState(field), 'W[<p>{O}</p>]A');
 		t.end();
 	});
 
